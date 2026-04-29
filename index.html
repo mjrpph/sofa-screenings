@@ -355,18 +355,25 @@
     flex-shrink: 0;
   }
 
-  .check-box.checked {
+  /* State 1: want to see — yellow dash */
+  .check-box.state-1 {
+    background: #f5c842;
+    border-color: #f5c842;
+  }
+
+  /* State 2: approved — green checkmark */
+  .check-box.state-2 {
     background: var(--check-on);
     border-color: var(--check-on);
   }
 
-  .check-box svg {
+  .check-box .icon {
     opacity: 0;
     transform: scale(0.5);
     transition: all 0.15s;
   }
-
-  .check-box.checked svg {
+  .check-box.state-1 .icon,
+  .check-box.state-2 .icon {
     opacity: 1;
     transform: scale(1);
   }
@@ -829,7 +836,8 @@ function loadChecks() {
   FILMS.forEach((_, fi) => {
     REVIEWERS.forEach((_, ri) => {
       const k = storageKey(fi, ri);
-      checks[k] = localStorage.getItem(k) === '1';
+      const v = parseInt(localStorage.getItem(k) || '0', 10);
+      checks[k] = isNaN(v) ? 0 : v;
     });
   });
 }
@@ -837,14 +845,21 @@ function loadChecks() {
 function saveCheck(filmIdx, reviewerIdx, val) {
   const k = storageKey(filmIdx, reviewerIdx);
   checks[k] = val;
-  localStorage.setItem(k, val ? '1' : '0');
+  localStorage.setItem(k, String(val));
 }
 
 function toggle(filmIdx, reviewerIdx) {
-  const newVal = !checks[storageKey(filmIdx, reviewerIdx)];
+  const cur = checks[storageKey(filmIdx, reviewerIdx)] || 0;
+  const newVal = (cur + 1) % 3;
   saveCheck(filmIdx, reviewerIdx, newVal);
-  const box = document.querySelector(`[data-fi="${filmIdx}"][data-ri="${reviewerIdx}"] .check-box`);
-  if (box) box.classList.toggle('checked', newVal);
+  const wrap = document.querySelector(`[data-fi="${filmIdx}"][data-ri="${reviewerIdx}"]`);
+  if (wrap) {
+    const box = wrap.querySelector('.check-box');
+    box.classList.remove('state-1', 'state-2');
+    if (newVal > 0) box.classList.add('state-' + newVal);
+    wrap.querySelector('.dash-icon').style.display  = newVal === 1 ? 'block' : 'none';
+    wrap.querySelector('.check-icon').style.display = newVal === 2 ? 'block' : 'none';
+  }
   updateStats();
 }
 
@@ -871,11 +886,16 @@ function buildTable() {
     let checkCells = '';
     REVIEWERS.forEach((r, ri) => {
       const isChecked = checks[storageKey(fi, ri)];
+      const state = checks[storageKey(fi, ri)] || 0;
+      const stateClass = state === 1 ? ' state-1' : state === 2 ? ' state-2' : '';
       checkCells += `
         <td class="check-cell" data-ri-col="${ri}">
           <div class="check-wrap" data-fi="${fi}" data-ri="${ri}" onclick="toggle(${fi},${ri})">
-            <div class="check-box${isChecked ? ' checked' : ''}">
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <div class="check-box${stateClass}">
+              <svg class="icon dash-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" style="display:${state===1?'block':'none'}">
+                <path d="M2.5 6h7" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              <svg class="icon check-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" style="display:${state===2?'block':'none'}">
                 <path d="M2 6l3 3 5-5" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </div>
@@ -942,7 +962,7 @@ function updateStats() {
   let total = 0;
   FILMS.forEach((_, fi) => {
     REVIEWERS.forEach((r, ri) => {
-      if (checks[storageKey(fi, ri)]) total++;
+      if (checks[storageKey(fi, ri)] > 0) total++;
     });
   });
   document.getElementById('total-films').textContent = FILMS.length;
@@ -957,7 +977,7 @@ function updateProgress() {
     style="--rc:#aaa" onclick="activeReviewer=null;filterReviewerCols();">All</button>`;
   html += REVIEWERS.map((r, ri) => {
     let count = 0;
-    FILMS.forEach((_, fi) => { if (checks[storageKey(fi, ri)]) count++; });
+    FILMS.forEach((_, fi) => { if (checks[storageKey(fi, ri)] > 0) count++; });
     const pct = Math.round((count / FILMS.length) * 100);
     const isActive = activeReviewer === ri;
     return `<button class="rev-filter-btn${isActive ? ' rev-active' : ''}" data-ri="${ri}"
@@ -994,9 +1014,14 @@ document.getElementById('clear-btn').addEventListener('click', () => {
   if (!confirm('Clear all checkmarks? This cannot be undone.')) return;
   FILMS.forEach((_, fi) => {
     REVIEWERS.forEach((r, ri) => {
-      saveCheck(fi, ri, false);
-      const box = document.querySelector(`[data-fi="${fi}"][data-ri="${ri}"] .check-box`);
-      if (box) box.classList.remove('checked');
+      saveCheck(fi, ri, 0);
+      const wrap = document.querySelector(`[data-fi="${fi}"][data-ri="${ri}"]`);
+      if (wrap) {
+        const box = wrap.querySelector('.check-box');
+        box.classList.remove('state-1', 'state-2');
+        wrap.querySelector('.dash-icon').style.display  = 'none';
+        wrap.querySelector('.check-icon').style.display = 'none';
+      }
     });
   });
   updateStats();
