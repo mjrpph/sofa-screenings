@@ -528,6 +528,40 @@
   .no-results.visible { display: block; }
 
 </style>
+  <!-- Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "firebase/app";
+
+    // ── PASTE YOUR FIREBASE CONFIG HERE ──────────────────────────────────────
+      const firebaseConfig = {
+          apiKey: "AIzaSyBKzDbYGf9J7pPLEcDNFRy7Lw-MFplJON0",
+          authDomain: "sofa-screenings.firebaseapp.com",
+          projectId: "sofa-screenings",
+          storageBucket: "sofa-screenings.firebasestorage.app",
+          messagingSenderId: "211506216878",
+          appId: "1:211506216878:web:d69095c28335e32c0a123f"
+    };
+    // ─────────────────────────────────────────────────────────────────────────
+    
+    const app = initializeApp(firebaseConfig);
+    const db  = getDatabase(app);
+
+    // Expose helpers to the global scope so the rest of the script can use them
+    window._fbSet = (key, val) => set(ref(db, 'checks/' + key), val);
+    window._fbListen = (callback) => {
+      onValue(ref(db, 'checks'), snapshot => {
+        callback(snapshot.val() || {});
+      });
+    };
+    window._fbReady = true;
+    window.dispatchEvent(new Event('firebase-ready'));
+  </script>
 </head>
 <body>
 
@@ -832,20 +866,42 @@ function storageKey(filmIdx, reviewerIdx) {
 }
 
 function loadChecks() {
+  // Seeded with zeros; Firebase listener will overwrite with real data
   checks = {};
   FILMS.forEach((_, fi) => {
-    REVIEWERS.forEach((_, ri) => {
-      const k = storageKey(fi, ri);
-      const v = parseInt(localStorage.getItem(k) || '0', 10);
-      checks[k] = isNaN(v) ? 0 : v;
+    REVIEWERS.forEach((_, ri) => { checks[storageKey(fi, ri)] = 0; });
+  });
+}
+
+function startFirebaseSync() {
+  window._fbListen(data => {
+    // Merge incoming data into checks
+    FILMS.forEach((_, fi) => {
+      REVIEWERS.forEach((_, ri) => {
+        const k = storageKey(fi, ri);
+        const v = parseInt((data[k] !== undefined ? data[k] : 0), 10);
+        checks[k] = isNaN(v) ? 0 : v;
+        // Update DOM to match
+        const wrap = document.querySelector(`[data-fi="${fi}"][data-ri="${ri}"]`);
+        if (wrap) {
+          const box = wrap.querySelector('.check-box');
+          box.classList.remove('state-1', 'state-2');
+          if (checks[k] > 0) box.classList.add('state-' + checks[k]);
+          wrap.querySelector('.dash-icon').style.display  = checks[k] === 1 ? 'block' : 'none';
+          wrap.querySelector('.check-icon').style.display = checks[k] === 2 ? 'block' : 'none';
+        }
+      });
     });
+    updateStats();
   });
 }
 
 function saveCheck(filmIdx, reviewerIdx, val) {
   const k = storageKey(filmIdx, reviewerIdx);
   checks[k] = val;
-  localStorage.setItem(k, String(val));
+  if (window._fbReady) {
+    window._fbSet(k, val);
+  }
 }
 
 function toggle(filmIdx, reviewerIdx) {
@@ -1027,11 +1083,19 @@ document.getElementById('clear-btn').addEventListener('click', () => {
   updateStats();
 });
 
-// Init
-loadChecks();
-buildTable();
-filterRows();
-updateStats();
+// Init — wait for Firebase module to be ready, then sync
+function init() {
+  loadChecks();
+  buildTable();
+  filterRows();
+  updateStats();
+  if (window._fbReady) {
+    startFirebaseSync();
+  } else {
+    window.addEventListener('firebase-ready', startFirebaseSync);
+  }
+}
+init();
 </script>
 </body>
 </html>
