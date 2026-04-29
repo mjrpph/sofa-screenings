@@ -532,34 +532,28 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-      // TODO: Add SDKs for Firebase products that you want to use
-      // https://firebase.google.com/docs/web/setup#available-libraries
 
-      // Import the functions you need from the SDKs you need
-      import { initializeApp } from "firebase/app";
-
-    // ── PASTE YOUR FIREBASE CONFIG HERE ──────────────────────────────────────
-      const firebaseConfig = {
-          apiKey: "AIzaSyBKzDbYGf9J7pPLEcDNFRy7Lw-MFplJON0",
-          authDomain: "sofa-screenings.firebaseapp.com",
-          projectId: "sofa-screenings",
-          storageBucket: "sofa-screenings.firebasestorage.app",
-          messagingSenderId: "211506216878",
-          appId: "1:211506216878:web:d69095c28335e32c0a123f",
-          databaseURL: "https://sofa-screenings-default-rtdb.firebaseio.com"
+    const firebaseConfig = {
+      apiKey:            "AIzaSyBKzDbYGf9J7pPLEcDNFRy7Lw-MFplJON0",
+      authDomain:        "sofa-screenings.firebaseapp.com",
+      projectId:         "sofa-screenings",
+      storageBucket:     "sofa-screenings.firebasestorage.app",
+      messagingSenderId: "211506216878",
+      appId:             "1:211506216878:web:d69095c28335e32c0a123f",
+      databaseURL:       "https://sofa-screenings-default-rtdb.firebaseio.com"
     };
-    // ─────────────────────────────────────────────────────────────────────────
-    
+
     const app = initializeApp(firebaseConfig);
     const db  = getDatabase(app);
 
-    // Expose helpers to the global scope so the rest of the script can use them
     window._fbSet = (key, val) => set(ref(db, 'checks/' + key), val);
     window._fbListen = (callback) => {
       onValue(ref(db, 'checks'), snapshot => {
         callback(snapshot.val() || {});
       });
     };
+
+    // Signal to main script that Firebase is ready
     window._fbReady = true;
     window.dispatchEvent(new Event('firebase-ready'));
   </script>
@@ -569,6 +563,7 @@
 <header class="site-header">
   <div class="header-inner">
     <div class="site-title">Spring Screenings 2026 <span>Review Checklist</span></div>
+    <div id="sync-status" style="font-size:11px;font-family:'DM Mono',monospace;padding:3px 8px;border-radius:4px;background:rgba(255,255,255,0.05);color:#7a8099;">⏳ connecting…</div>
     <div class="header-stats">
       <div class="stat"><strong id="total-films">0</strong> films</div>
       <div class="stat"><strong id="total-checks">0</strong> checks total</div>
@@ -867,15 +862,28 @@ function storageKey(filmIdx, reviewerIdx) {
 }
 
 function loadChecks() {
-  // Seeded with zeros; Firebase listener will overwrite with real data
+  // Seed from localStorage immediately for instant display
   checks = {};
   FILMS.forEach((_, fi) => {
-    REVIEWERS.forEach((_, ri) => { checks[storageKey(fi, ri)] = 0; });
+    REVIEWERS.forEach((_, ri) => {
+      const k = storageKey(fi, ri);
+      const v = parseInt(localStorage.getItem(k) || '0', 10);
+      checks[k] = isNaN(v) ? 0 : v;
+    });
   });
+}
+
+function setSyncStatus(state) {
+  const el = document.getElementById('sync-status');
+  if (!el) return;
+  if (state === 'connected')  { el.textContent = '🟢 synced';        el.style.color = '#4ade80'; }
+  else if (state === 'error') { el.textContent = '🔴 sync error';     el.style.color = '#f87171'; }
+  else                        { el.textContent = '⏳ connecting…';    el.style.color = '#7a8099'; }
 }
 
 function startFirebaseSync() {
   window._fbListen(data => {
+    setSyncStatus('connected');
     // Merge incoming data into checks
     FILMS.forEach((_, fi) => {
       REVIEWERS.forEach((_, ri) => {
@@ -900,8 +908,12 @@ function startFirebaseSync() {
 function saveCheck(filmIdx, reviewerIdx, val) {
   const k = storageKey(filmIdx, reviewerIdx);
   checks[k] = val;
+  localStorage.setItem(k, String(val));   // instant local cache
   if (window._fbReady) {
-    window._fbSet(k, val);
+    window._fbSet(k, val).catch(err => {
+      console.error('Firebase write error:', err);
+      setSyncStatus('error');
+    });
   }
 }
 
