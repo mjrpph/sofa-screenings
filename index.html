@@ -314,8 +314,8 @@
   }
 
   .author-name {
-    color: var(--text-dim);
-    font-size: 12px;
+    color: #ffffff;
+    font-size: 13.5px;
   }
 
   .runtime {
@@ -367,13 +367,20 @@
     border-color: var(--check-on);
   }
 
+  /* State 3: rejected — red X */
+  .check-box.state-3 {
+    background: #ef4444;
+    border-color: #ef4444;
+  }
+
   .check-box .icon {
     opacity: 0;
     transform: scale(0.5);
     transition: all 0.15s;
   }
   .check-box.state-1 .icon,
-  .check-box.state-2 .icon {
+  .check-box.state-2 .icon,
+  .check-box.state-3 .icon {
     opacity: 1;
     transform: scale(1);
   }
@@ -894,10 +901,11 @@ function startFirebaseSync() {
         const wrap = document.querySelector(`[data-fi="${fi}"][data-ri="${ri}"]`);
         if (wrap) {
           const box = wrap.querySelector('.check-box');
-          box.classList.remove('state-1', 'state-2');
+          box.classList.remove('state-1', 'state-2', 'state-3');
           if (checks[k] > 0) box.classList.add('state-' + checks[k]);
           wrap.querySelector('.dash-icon').style.display  = checks[k] === 1 ? 'block' : 'none';
           wrap.querySelector('.check-icon').style.display = checks[k] === 2 ? 'block' : 'none';
+          wrap.querySelector('.x-icon').style.display     = checks[k] === 3 ? 'block' : 'none';
         }
       });
     });
@@ -919,15 +927,16 @@ function saveCheck(filmIdx, reviewerIdx, val) {
 
 function toggle(filmIdx, reviewerIdx) {
   const cur = checks[storageKey(filmIdx, reviewerIdx)] || 0;
-  const newVal = (cur + 1) % 3;
+  const newVal = (cur + 1) % 4;
   saveCheck(filmIdx, reviewerIdx, newVal);
   const wrap = document.querySelector(`[data-fi="${filmIdx}"][data-ri="${reviewerIdx}"]`);
   if (wrap) {
     const box = wrap.querySelector('.check-box');
-    box.classList.remove('state-1', 'state-2');
+    box.classList.remove('state-1', 'state-2', 'state-3');
     if (newVal > 0) box.classList.add('state-' + newVal);
     wrap.querySelector('.dash-icon').style.display  = newVal === 1 ? 'block' : 'none';
     wrap.querySelector('.check-icon').style.display = newVal === 2 ? 'block' : 'none';
+    wrap.querySelector('.x-icon').style.display     = newVal === 3 ? 'block' : 'none';
   }
   updateStats();
 }
@@ -956,7 +965,7 @@ function buildTable() {
     REVIEWERS.forEach((r, ri) => {
       const isChecked = checks[storageKey(fi, ri)];
       const state = checks[storageKey(fi, ri)] || 0;
-      const stateClass = state === 1 ? ' state-1' : state === 2 ? ' state-2' : '';
+      const stateClass = state === 1 ? ' state-1' : state === 2 ? ' state-2' : state === 3 ? ' state-3' : '';
       checkCells += `
         <td class="check-cell" data-ri-col="${ri}">
           <div class="check-wrap" data-fi="${fi}" data-ri="${ri}" onclick="toggle(${fi},${ri})">
@@ -966,6 +975,9 @@ function buildTable() {
               </svg>
               <svg class="icon check-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" style="display:${state===2?'block':'none'}">
                 <path d="M2 6l3 3 5-5" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <svg class="icon x-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" style="display:${state===3?'block':'none'}">
+                <path d="M2.5 2.5l7 7M9.5 2.5l-7 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
               </svg>
             </div>
           </div>
@@ -1090,6 +1102,7 @@ document.getElementById('clear-btn').addEventListener('click', () => {
         box.classList.remove('state-1', 'state-2');
         wrap.querySelector('.dash-icon').style.display  = 'none';
         wrap.querySelector('.check-icon').style.display = 'none';
+        wrap.querySelector('.x-icon').style.display     = 'none';
       }
     });
   });
