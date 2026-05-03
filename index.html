@@ -612,13 +612,10 @@
 
 <header class="site-header">
   <div class="header-inner">
-    <div class="site-title">Spring Screenings 2026 <span>Review Checklist</span></div>
-    <div id="current-day-indicator" style="font-size:12px;font-family:'DM Sans',sans-serif;font-weight:600;color:#ffffff;padding:3px 10px;border-radius:4px;background:rgba(255,255,255,0.07);display:none;"></div>
+    <div class="site-title">Spring Screenings 2026</div>
+    <div id="current-day-indicator" style="font-size:14px;font-family:'DM Serif Display',serif;font-weight:400;color:#ffffff;padding:2px 12px;border-radius:4px;display:none;"></div>
     <div id="sync-status" style="font-size:11px;font-family:'DM Mono',monospace;padding:3px 8px;border-radius:4px;background:rgba(255,255,255,0.05);color:#7a8099;">⏳ connecting…</div>
-    <div class="header-stats">
-      <div class="stat"><strong id="total-films">0</strong> films</div>
-      <div class="stat"><strong id="total-checks">0</strong> checks total</div>
-    </div>
+
   </div>
 </header>
 
@@ -633,7 +630,7 @@
     <button class="day-btn" data-day="Sunday">Sun</button>
     <button class="day-btn" data-day="Monday">Mon</button>
   </div>
-  <button class="clear-btn" id="clear-btn">Clear All Checks</button>
+  <div style="margin-left:auto;display:flex;align-items:center;gap:10px;"><span style="font-family:'DM Mono',monospace;font-size:11px;color:#ffffff;"><strong id="total-films" style="color:#f5c842;font-size:13px;">0</strong> films</span><button class="clear-btn" id="clear-btn">Clear All Checks</button></div>
 </div>
 
 <div class="filters-bar" id="filters-bar-2" style="padding-top:8px;padding-bottom:8px;gap:10px;flex-wrap:wrap;">
@@ -645,7 +642,7 @@
     <button class="state-btn" data-state="2">✓ Approved</button>
     <button class="state-btn" data-state="3">✗ Rejected</button>
   </div>
-  <div style="margin-left:auto;display:flex;gap:8px;"><button class="desc-toggle-btn" id="desc-toggle-btn">📋 Show Descriptions</button><button class="desc-toggle-btn" id="txt-btn" style="border-color:#14b8a6;color:#14b8a6;">TXT</button></div>
+  <div style="margin-left:auto;display:flex;gap:8px;"><button class="desc-toggle-btn" id="reviewers-toggle-btn">Hide Reviewer Names</button><button class="desc-toggle-btn" id="desc-toggle-btn">📋 Show Descriptions</button><button class="desc-toggle-btn" id="txt-btn" style="border-color:#14b8a6;color:#14b8a6;">TXT</button></div>
 </div>
 
 <div class="progress-row" id="progress-row"></div>
@@ -1184,7 +1181,6 @@ function updateStats() {
     });
   });
   document.getElementById('total-films').textContent = FILMS.length;
-  document.getElementById('total-checks').textContent = total;
   updateProgress();
 }
 
@@ -1261,6 +1257,25 @@ document.getElementById('clear-btn').addEventListener('click', () => {
   updateStats();
 });
 
+// ── Reviewer names toggle ─────────────────────────────────────────────────────
+let showReviewerNames = localStorage.getItem('pref_reviewer_names') !== '0';
+
+function applyReviewerNames() {
+  const btn = document.getElementById('reviewers-toggle-btn');
+  const bar = document.getElementById('progress-row');
+  if (bar) bar.style.display = showReviewerNames ? '' : 'none';
+  if (btn) {
+    btn.textContent = showReviewerNames ? 'Hide Reviewer Names' : 'Show Reviewer Names';
+    btn.classList.toggle('active', !showReviewerNames);
+  }
+}
+
+document.getElementById('reviewers-toggle-btn').addEventListener('click', () => {
+  showReviewerNames = !showReviewerNames;
+  localStorage.setItem('pref_reviewer_names', showReviewerNames ? '1' : '0');
+  applyReviewerNames();
+});
+
 // Init — wait for Firebase module to be ready, then sync
 function init() {
   // Restore saved preferences
@@ -1289,6 +1304,7 @@ function init() {
   loadChecks();
   buildTable();
 
+  applyReviewerNames();
   // Sync desc toggle button
   const descBtn = document.getElementById('desc-toggle-btn');
   if (descBtn && showDescriptions) {
