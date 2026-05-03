@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -26,556 +27,551 @@
     --mon: #34d399;
   }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    line-height: 1.4;
-    min-height: 100vh;
-  }
-
-  /* HEADER */
-  .site-header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(13,15,20,0.95);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-    padding: 0 20px;
-  }
-
-  .header-inner {
-    max-width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    height: 56px;
-  }
-
-  .site-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 20px;
-    color: var(--accent);
-    white-space: nowrap;
-    letter-spacing: -0.3px;
-  }
-
-  .site-title span {
-    color: var(--text-dim);
-    font-style: italic;
-    font-size: 14px;
-    margin-left: 6px;
-  }
-
-  .header-stats {
-    display: flex;
-    gap: 16px;
-    margin-left: auto;
-    align-items: center;
-  }
-
-  .stat {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: #ffffff;
-  }
-
-  .stat strong {
-    color: var(--accent);
-    font-size: 13px;
-  }
-
-  /* FILTERS */
-  .filters-bar {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 10px 20px;
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-
-  .filter-label {
-    font-size: 11px;
-    color: #ffffff;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-weight: 500;
-  }
-
-  .search-input {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    color: var(--text);
-    padding: 5px 10px;
-    border-radius: 4px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 12px;
-    width: 200px;
-    outline: none;
-    transition: border-color 0.15s;
-  }
-  .search-input:focus { border-color: var(--accent); }
-  .search-input::placeholder { color: var(--text-dimmer); }
-
-  .day-filters {
-    display: flex;
-    gap: 6px;
-  }
-
-  .day-btn, .state-btn {
-    padding: 4px 10px;
-    border-radius: 4px;
-    border: 1px solid var(--border);
-    background: transparent;
-    color: #ffffff;
-    font-size: 11px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.15s;
-    font-family: 'DM Sans', sans-serif;
-    letter-spacing: 0.03em;
-  }
-  .day-btn:hover { border-color: #ffffff; color: #ffffff; }
-  .state-btn:hover { border-color: #ffffff; color: #ffffff; }
-  .day-btn.active { background: var(--accent); border-color: var(--accent); color: #000; font-weight: 600; }
-  .state-btn.active { font-weight: 600; }
-  .state-btn[data-state="all"].active    { background: #ffffff; border-color: #ffffff; color: #000; }
-  .state-btn[data-state="0"].active      { background: var(--surface2); border-color: var(--text-dim); color: #ffffff; }
-  .state-btn[data-state="1"].active      { background: #f5c842; border-color: #f5c842; color: #000; }
-  .state-btn[data-state="2"].active      { background: #4ade80; border-color: #4ade80; color: #000; }
-  .state-btn[data-state="3"].active      { background: #ef4444; border-color: #ef4444; color: #fff; }
-  .day-btn[data-day="Thursday"].active { background: var(--thu); border-color: var(--thu); }
-  .day-btn[data-day="Friday"].active { background: var(--fri); border-color: var(--fri); color: #fff; }
-  .day-btn[data-day="Saturday"].active { background: var(--sat); border-color: var(--sat); }
-  .day-btn[data-day="Sunday"].active { background: var(--sun); border-color: var(--sun); color: #fff; }
-  .day-btn[data-day="Monday"].active { background: var(--mon); border-color: var(--mon); color: #000; }
-
-  .clear-btn {
-    margin-left: auto;
-    padding: 4px 12px;
-    border-radius: 4px;
-    border: 1px solid #3d2020;
-    background: transparent;
-    color: #e05050;
-    font-size: 11px;
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    transition: all 0.15s;
-  }
-  .clear-btn:hover { background: #3d2020; }
-
-  /* TABLE WRAPPER */
-  .table-wrapper {
-    overflow-x: visible;
-    padding: 0;
-  }
-
-  body {
-    overflow-x: auto;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 0;
-  }
-
-  /* STICKY HEADER */
-  thead {
-    position: sticky;
-    top: 56px;
-    z-index: 90;
-  }
-
-  thead tr:first-child th {
-    background: var(--surface2);
-    border-bottom: 2px solid var(--border);
-    padding: 10px 12px;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: #ffffff;
-    white-space: nowrap;
-  }
-
-  th.film-col { text-align: left; width: 34%; min-width: 260px; }
-  th.author-col { text-align: left; width: 14%; min-width: 120px; }
-  th.runtime-col { text-align: center; width: 7%; min-width: 70px; }
-  th.reviewer-col { text-align: center; width: 9%; min-width: 80px; }
-
-  .reviewer-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 3px;
-    cursor: pointer;
-    user-select: none;
-  }
-
-  .reviewer-initials {
-    width: 28px; height: 28px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0;
-    font-family: 'DM Mono', monospace;
-  }
-
-  .reviewer-name-short {
-    font-size: 9px;
-    color: #ffffff;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-  }
-
-  /* DAY SECTION HEADER */
-  tr.day-row.hidden { display: none; }
-
-  .day-row td {
-    padding: 18px 16px 12px;
-    font-family: 'DM Serif Display', serif;
-    font-size: 22px;
-    color: #ffffff;
-    border-top: 3px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    background: #252a3a;
-    position: relative;
-    letter-spacing: -0.2px;
-  }
-
-
-
-  .day-row td::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 3px;
-  }
-
-  .day-row[data-day="Thursday"] td::before { background: var(--thu); }
-  .day-row[data-day="Friday"] td::before { background: var(--fri); }
-  .day-row[data-day="Saturday"] td::before { background: var(--sat); }
-  .day-row[data-day="Sunday"] td::before { background: var(--sun); }
-  .day-row[data-day="Monday"] td::before { background: var(--mon); }
-
-  .day-tag {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 3px;
-    font-size: 10px;
-    font-family: 'DM Mono', monospace;
-    font-weight: 500;
-    margin-left: 10px;
-    vertical-align: middle;
-    letter-spacing: 0.05em;
-  }
-
-  .day-row[data-day="Thursday"] .day-tag { background: rgba(59,130,246,0.15); color: var(--thu); }
-  .day-row[data-day="Friday"] .day-tag { background: rgba(236,72,153,0.15); color: var(--fri); }
-  .day-row[data-day="Saturday"] .day-tag { background: rgba(249,115,22,0.15); color: var(--sat); }
-  .day-row[data-day="Sunday"] .day-tag { background: rgba(167,139,250,0.15); color: var(--sun); }
-  .day-row[data-day="Monday"] .day-tag { background: rgba(52,211,153,0.15); color: var(--mon); }
-
-  /* SESSION BADGE (morning/afternoon) */
-  .session-badge {
-    display: inline-block;
-    padding: 1px 6px;
-    border-radius: 3px;
-    font-size: 9px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-right: 6px;
-    font-family: 'DM Mono', monospace;
-  }
-
-  .session-morning { background: rgba(245,200,66,0.12); color: #d4ac25; }
-  .session-afternoon { background: rgba(124,111,247,0.12); color: #9b8ef5; }
-
-  /* FILM ROW */
-  tr.film-row {
-    border-bottom: 1px solid rgba(42,47,62,0.5);
-    transition: background 0.1s;
-  }
-  tr.film-row:hover { background: rgba(255,255,255,0.02); }
-  tr.film-row.hidden { display: none; }
-
-  td {
-    padding: 9px 12px;
-    vertical-align: middle;
-  }
-
-  .film-name {
-    font-weight: 500;
-    color: #ffffff;
-    font-size: 12.5px;
-    line-height: 1.3;
-  }
-
-  .author-name {
-    color: #ffffff;
-    font-size: 13.5px;
-  }
-
-  .runtime {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: #ffffff;
-    text-align: center;
-  }
-
-  /* CHECKBOXES */
-  .check-cell {
-    text-align: center;
-    padding: 6px 4px;
-  }
-
-  .check-wrap {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px; height: 32px;
-    cursor: pointer;
-    border-radius: 6px;
-    transition: background 0.1s;
-  }
-  .check-wrap:hover { background: rgba(255,255,255,0.05); }
-  .check-wrap:active { transform: scale(0.92); }
-
-  .check-box {
-    width: 20px; height: 20px;
-    border-radius: 4px;
-    border: 1.5px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.15s;
-    background: var(--surface);
-    flex-shrink: 0;
-  }
-
-  /* State 1: want to see — yellow dash */
-  .check-box.state-1 {
-    background: #f5c842;
-    border-color: #f5c842;
-  }
-
-  /* State 2: approved — green checkmark */
-  .check-box.state-2 {
-    background: var(--check-on);
-    border-color: var(--check-on);
-  }
-
-  /* State 3: rejected — red X */
-  .check-box.state-3 {
-    background: #ef4444;
-    border-color: #ef4444;
-  }
-
-  .check-box .icon {
-    opacity: 0;
-    transform: scale(0.5);
-    transition: all 0.15s;
-  }
-  .check-box.state-1 .icon,
-  .check-box.state-2 .icon,
-  .check-box.state-3 .icon {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  /* PROGRESS */
-  .progress-row {
-    display: flex;
-    gap: 16px;
-    padding: 12px 20px;
-    border-bottom: 1px solid var(--border);
-    background: var(--surface);
-    flex-wrap: wrap;
-  }
-
-  .reviewer-progress {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    min-width: 100px;
-  }
-
-  .rp-header {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 11px;
-    color: var(--text-dim);
-    font-weight: 500;
-  }
-
-  .rp-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .rp-bar-bg {
-    height: 3px;
-    background: var(--border);
-    border-radius: 2px;
-    overflow: hidden;
-  }
-
-  .rp-bar-fill {
-    height: 100%;
-    border-radius: 2px;
-    transition: width 0.3s ease;
-  }
-
-  .rp-count {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--text-dimmer);
-  }
-
-
-  /* REVIEWER FILTER BUTTONS */
-  .progress-row {
-    align-items: flex-start;
-  }
-
-  .rev-filter-btn {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    min-width: 100px;
-    padding: 7px 10px;
-    background: transparent;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    color: var(--text-dim);
-    text-align: left;
-    transition: border-color 0.15s, background 0.15s;
-  }
-  .rev-filter-btn:hover {
-    border-color: var(--rc, #aaa);
-    background: rgba(255,255,255,0.03);
-  }
-  .rev-filter-btn.rev-active {
-    border-color: var(--rc, #aaa);
-    background: rgba(255,255,255,0.05);
-    color: #fff;
-  }
-  .rev-filter-btn[data-ri="all"] {
-    min-width: 50px;
-    justify-content: center;
-    align-self: stretch;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    align-items: center;
-  }
-  .rev-filter-btn[data-ri="all"].rev-active {
-    border-color: #aaa;
-    color: #fff;
-  }
-  .rp-btn-inner {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 11px;
-    font-weight: 500;
-    color: #ffffff;
-  }
-  .rp-btn-inner .rp-count {
-    margin-left: auto;
-  }
-
-
-  /* RESPONSIVE — Author & Runtime shrink/hide, Film Name & checkboxes always visible */
-  @media (max-width: 1100px) {
-    th.author-col, td:nth-child(2) { max-width: 90px; }
-    th.runtime-col, td:nth-child(3) { max-width: 60px; }
-    .author-name { font-size: 11px; }
-    .runtime { font-size: 10px; }
-  }
-
-  @media (max-width: 900px) {
-    th.runtime-col, td:nth-child(3) { display: none; }
-    th.author-col, td:nth-child(2) { max-width: 80px; }
-    .author-name { font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 80px; display: block; }
-  }
-
-  @media (max-width: 700px) {
-    th.author-col, td:nth-child(2) { display: none; }
-    th.film-col { min-width: 140px; }
-    .film-name { font-size: 11.5px; }
-    .reviewer-col, th.reviewer-col { min-width: 44px; width: 44px; }
-    .check-wrap { width: 28px; height: 28px; }
-    .check-box { width: 18px; height: 18px; }
-    .reviewer-initials { width: 24px; height: 24px; font-size: 9px; }
-    .reviewer-name-short { display: none; }
-  }
-
-  @media (max-width: 500px) {
-    .film-name { font-size: 11px; }
-    .session-badge { display: none; }
-    th.film-col { min-width: 110px; }
-  }
-
-
-  .desc-toggle-btn {
-    margin-left: auto;
-    padding: 5px 12px;
-    border-radius: 4px;
-    border: 1px solid var(--border);
-    background: transparent;
-    color: #ffffff;
-    font-size: 11px;
-    font-weight: 500;
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    transition: all 0.15s;
-    white-space: nowrap;
-  }
-  .desc-toggle-btn:hover { border-color: var(--accent); color: var(--accent); }
-  .desc-toggle-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(245,200,66,0.08); }
-
-  tr.desc-row td {
-    padding: 0 12px 10px 12px;
-    font-size: 12px;
-    color: var(--text-dim);
-    font-style: italic;
-    line-height: 1.5;
-    border-bottom: 1px solid rgba(42,47,62,0.5);
-  }
-  tr.desc-row.hidden { display: none; }
-  tr.desc-row td span {
-    display: block;
-    padding: 6px 10px;
-    background: rgba(255,255,255,0.03);
-    border-left: 2px solid var(--border);
-    border-radius: 0 4px 4px 0;
-  }
-
-  /* NO RESULTS */
-  .no-results {
-    text-align: center;
-    padding: 40px;
-    color: var(--text-dimmer);
-    font-style: italic;
-    display: none;
-  }
-  .no-results.visible { display: block; }
+- { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+background: var(–bg);
+color: var(–text);
+font-family: ‘DM Sans’, sans-serif;
+font-size: 13px;
+line-height: 1.4;
+min-height: 100vh;
+}
+
+/* HEADER */
+.site-header {
+position: sticky;
+top: 0;
+z-index: 100;
+background: rgba(13,15,20,0.95);
+backdrop-filter: blur(12px);
+border-bottom: 1px solid var(–border);
+padding: 0 20px;
+}
+
+.header-inner {
+max-width: 100%;
+display: flex;
+align-items: center;
+gap: 20px;
+height: 56px;
+}
+
+.site-title {
+font-family: ‘DM Serif Display’, serif;
+font-size: 20px;
+color: var(–accent);
+white-space: nowrap;
+letter-spacing: -0.3px;
+}
+
+.site-title span {
+color: var(–text-dim);
+font-style: italic;
+font-size: 14px;
+margin-left: 6px;
+}
+
+.header-stats {
+display: flex;
+gap: 16px;
+margin-left: auto;
+align-items: center;
+}
+
+.stat {
+font-family: ‘DM Mono’, monospace;
+font-size: 11px;
+color: #ffffff;
+}
+
+.stat strong {
+color: var(–accent);
+font-size: 13px;
+}
+
+/* FILTERS */
+.filters-bar {
+background: var(–surface);
+border-bottom: 1px solid var(–border);
+padding: 10px 20px;
+display: flex;
+gap: 12px;
+align-items: center;
+flex-wrap: wrap;
+}
+
+.filter-label {
+font-size: 11px;
+color: #ffffff;
+text-transform: uppercase;
+letter-spacing: 0.08em;
+font-weight: 500;
+}
+
+.search-input {
+background: var(–bg);
+border: 1px solid var(–border);
+color: var(–text);
+padding: 5px 10px;
+border-radius: 4px;
+font-family: ‘DM Sans’, sans-serif;
+font-size: 12px;
+width: 200px;
+outline: none;
+transition: border-color 0.15s;
+}
+.search-input:focus { border-color: var(–accent); }
+.search-input::placeholder { color: var(–text-dimmer); }
+
+.day-filters {
+display: flex;
+gap: 6px;
+}
+
+.day-btn, .state-btn {
+padding: 4px 10px;
+border-radius: 4px;
+border: 1px solid var(–border);
+background: transparent;
+color: #ffffff;
+font-size: 11px;
+font-weight: 500;
+cursor: pointer;
+transition: all 0.15s;
+font-family: ‘DM Sans’, sans-serif;
+letter-spacing: 0.03em;
+}
+.day-btn:hover { border-color: #ffffff; color: #ffffff; }
+.state-btn:hover { border-color: #ffffff; color: #ffffff; }
+.day-btn.active { background: var(–accent); border-color: var(–accent); color: #000; font-weight: 600; }
+.state-btn.active { font-weight: 600; }
+.state-btn[data-state=“all”].active    { background: #ffffff; border-color: #ffffff; color: #000; }
+.state-btn[data-state=“0”].active      { background: var(–surface2); border-color: var(–text-dim); color: #ffffff; }
+.state-btn[data-state=“1”].active      { background: #f5c842; border-color: #f5c842; color: #000; }
+.state-btn[data-state=“2”].active      { background: #4ade80; border-color: #4ade80; color: #000; }
+.state-btn[data-state=“3”].active      { background: #ef4444; border-color: #ef4444; color: #fff; }
+.day-btn[data-day=“Thursday”].active { background: var(–thu); border-color: var(–thu); }
+.day-btn[data-day=“Friday”].active { background: var(–fri); border-color: var(–fri); color: #fff; }
+.day-btn[data-day=“Saturday”].active { background: var(–sat); border-color: var(–sat); }
+.day-btn[data-day=“Sunday”].active { background: var(–sun); border-color: var(–sun); color: #fff; }
+.day-btn[data-day=“Monday”].active { background: var(–mon); border-color: var(–mon); color: #000; }
+
+.clear-btn {
+margin-left: auto;
+padding: 4px 12px;
+border-radius: 4px;
+border: 1px solid #3d2020;
+background: transparent;
+color: #e05050;
+font-size: 11px;
+cursor: pointer;
+font-family: ‘DM Sans’, sans-serif;
+transition: all 0.15s;
+}
+.clear-btn:hover { background: #3d2020; }
+
+/* TABLE WRAPPER */
+.table-wrapper {
+overflow-x: visible;
+padding: 0;
+}
+
+body {
+overflow-x: auto;
+}
+
+table {
+width: 100%;
+border-collapse: collapse;
+min-width: 0;
+}
+
+/* STICKY HEADER */
+thead {
+position: sticky;
+top: 56px;
+z-index: 90;
+}
+
+thead tr:first-child th {
+background: var(–surface2);
+border-bottom: 2px solid var(–border);
+padding: 10px 12px;
+font-size: 10px;
+font-weight: 600;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+color: #ffffff;
+white-space: nowrap;
+}
+
+th.film-col { text-align: left; width: 34%; min-width: 260px; }
+th.author-col { text-align: left; width: 14%; min-width: 120px; }
+th.runtime-col { text-align: center; width: 7%; min-width: 70px; }
+th.reviewer-col { text-align: center; width: 9%; min-width: 80px; }
+
+.reviewer-header {
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 3px;
+cursor: pointer;
+user-select: none;
+}
+
+.reviewer-initials {
+width: 28px; height: 28px;
+border-radius: 50%;
+display: flex; align-items: center; justify-content: center;
+font-size: 11px;
+font-weight: 700;
+letter-spacing: 0;
+font-family: ‘DM Mono’, monospace;
+}
+
+.reviewer-name-short {
+font-size: 9px;
+color: #ffffff;
+font-weight: 500;
+letter-spacing: 0.05em;
+}
+
+/* DAY SECTION HEADER */
+tr.day-row.hidden { display: none; }
+
+.day-row td {
+padding: 18px 16px 12px;
+font-family: ‘DM Serif Display’, serif;
+font-size: 22px;
+color: #ffffff;
+border-top: 3px solid var(–border);
+border-bottom: 1px solid var(–border);
+background: #252a3a;
+position: relative;
+letter-spacing: -0.2px;
+}
+
+.day-row td::before {
+content: ‘’;
+position: absolute;
+left: 0; top: 0; bottom: 0;
+width: 3px;
+}
+
+.day-row[data-day=“Thursday”] td::before { background: var(–thu); }
+.day-row[data-day=“Friday”] td::before { background: var(–fri); }
+.day-row[data-day=“Saturday”] td::before { background: var(–sat); }
+.day-row[data-day=“Sunday”] td::before { background: var(–sun); }
+.day-row[data-day=“Monday”] td::before { background: var(–mon); }
+
+.day-tag {
+display: inline-block;
+padding: 2px 8px;
+border-radius: 3px;
+font-size: 10px;
+font-family: ‘DM Mono’, monospace;
+font-weight: 500;
+margin-left: 10px;
+vertical-align: middle;
+letter-spacing: 0.05em;
+}
+
+.day-row[data-day=“Thursday”] .day-tag { background: rgba(59,130,246,0.15); color: var(–thu); }
+.day-row[data-day=“Friday”] .day-tag { background: rgba(236,72,153,0.15); color: var(–fri); }
+.day-row[data-day=“Saturday”] .day-tag { background: rgba(249,115,22,0.15); color: var(–sat); }
+.day-row[data-day=“Sunday”] .day-tag { background: rgba(167,139,250,0.15); color: var(–sun); }
+.day-row[data-day=“Monday”] .day-tag { background: rgba(52,211,153,0.15); color: var(–mon); }
+
+/* SESSION BADGE (morning/afternoon) */
+.session-badge {
+display: inline-block;
+padding: 1px 6px;
+border-radius: 3px;
+font-size: 9px;
+font-weight: 600;
+letter-spacing: 0.08em;
+text-transform: uppercase;
+margin-right: 6px;
+font-family: ‘DM Mono’, monospace;
+}
+
+.session-morning { background: rgba(245,200,66,0.12); color: #d4ac25; }
+.session-afternoon { background: rgba(124,111,247,0.12); color: #9b8ef5; }
+
+/* FILM ROW */
+tr.film-row {
+border-bottom: 1px solid rgba(42,47,62,0.5);
+transition: background 0.1s;
+}
+tr.film-row:hover { background: rgba(255,255,255,0.02); }
+tr.film-row.hidden { display: none; }
+
+td {
+padding: 9px 12px;
+vertical-align: middle;
+}
+
+.film-name {
+font-weight: 500;
+color: #ffffff;
+font-size: 12.5px;
+line-height: 1.3;
+}
+
+.author-name {
+color: #ffffff;
+font-size: 13.5px;
+}
+
+.runtime {
+font-family: ‘DM Mono’, monospace;
+font-size: 11px;
+color: #ffffff;
+text-align: center;
+}
+
+/* CHECKBOXES */
+.check-cell {
+text-align: center;
+padding: 6px 4px;
+}
+
+.check-wrap {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+width: 32px; height: 32px;
+cursor: pointer;
+border-radius: 6px;
+transition: background 0.1s;
+}
+.check-wrap:hover { background: rgba(255,255,255,0.05); }
+.check-wrap:active { transform: scale(0.92); }
+
+.check-box {
+width: 20px; height: 20px;
+border-radius: 4px;
+border: 1.5px solid var(–border);
+display: flex;
+align-items: center;
+justify-content: center;
+transition: all 0.15s;
+background: var(–surface);
+flex-shrink: 0;
+}
+
+/* State 1: want to see — yellow dash */
+.check-box.state-1 {
+background: #f5c842;
+border-color: #f5c842;
+}
+
+/* State 2: approved — green checkmark */
+.check-box.state-2 {
+background: var(–check-on);
+border-color: var(–check-on);
+}
+
+/* State 3: rejected — red X */
+.check-box.state-3 {
+background: #ef4444;
+border-color: #ef4444;
+}
+
+.check-box .icon {
+opacity: 0;
+transform: scale(0.5);
+transition: all 0.15s;
+}
+.check-box.state-1 .icon,
+.check-box.state-2 .icon,
+.check-box.state-3 .icon {
+opacity: 1;
+transform: scale(1);
+}
+
+/* PROGRESS */
+.progress-row {
+display: flex;
+gap: 16px;
+padding: 12px 20px;
+border-bottom: 1px solid var(–border);
+background: var(–surface);
+flex-wrap: wrap;
+}
+
+.reviewer-progress {
+display: flex;
+flex-direction: column;
+gap: 4px;
+min-width: 100px;
+}
+
+.rp-header {
+display: flex;
+align-items: center;
+gap: 6px;
+font-size: 11px;
+color: var(–text-dim);
+font-weight: 500;
+}
+
+.rp-dot {
+width: 8px; height: 8px;
+border-radius: 50%;
+flex-shrink: 0;
+}
+
+.rp-bar-bg {
+height: 3px;
+background: var(–border);
+border-radius: 2px;
+overflow: hidden;
+}
+
+.rp-bar-fill {
+height: 100%;
+border-radius: 2px;
+transition: width 0.3s ease;
+}
+
+.rp-count {
+font-family: ‘DM Mono’, monospace;
+font-size: 10px;
+color: var(–text-dimmer);
+}
+
+/* REVIEWER FILTER BUTTONS */
+.progress-row {
+align-items: flex-start;
+}
+
+.rev-filter-btn {
+display: flex;
+flex-direction: column;
+gap: 4px;
+min-width: 100px;
+padding: 7px 10px;
+background: transparent;
+border: 1px solid var(–border);
+border-radius: 6px;
+cursor: pointer;
+font-family: ‘DM Sans’, sans-serif;
+color: var(–text-dim);
+text-align: left;
+transition: border-color 0.15s, background 0.15s;
+}
+.rev-filter-btn:hover {
+border-color: var(–rc, #aaa);
+background: rgba(255,255,255,0.03);
+}
+.rev-filter-btn.rev-active {
+border-color: var(–rc, #aaa);
+background: rgba(255,255,255,0.05);
+color: #fff;
+}
+.rev-filter-btn[data-ri=“all”] {
+min-width: 50px;
+justify-content: center;
+align-self: stretch;
+font-size: 12px;
+font-weight: 600;
+letter-spacing: 0.05em;
+text-transform: uppercase;
+color: var(–text-dim);
+align-items: center;
+}
+.rev-filter-btn[data-ri=“all”].rev-active {
+border-color: #aaa;
+color: #fff;
+}
+.rp-btn-inner {
+display: flex;
+align-items: center;
+gap: 6px;
+font-size: 11px;
+font-weight: 500;
+color: #ffffff;
+}
+.rp-btn-inner .rp-count {
+margin-left: auto;
+}
+
+/* RESPONSIVE — Author & Runtime shrink/hide, Film Name & checkboxes always visible */
+@media (max-width: 1100px) {
+th.author-col, td:nth-child(2) { max-width: 90px; }
+th.runtime-col, td:nth-child(3) { max-width: 60px; }
+.author-name { font-size: 11px; }
+.runtime { font-size: 10px; }
+}
+
+@media (max-width: 900px) {
+th.runtime-col, td:nth-child(3) { display: none; }
+th.author-col, td:nth-child(2) { max-width: 80px; }
+.author-name { font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 80px; display: block; }
+}
+
+@media (max-width: 700px) {
+th.author-col, td:nth-child(2) { display: none; }
+th.film-col { min-width: 140px; }
+.film-name { font-size: 11.5px; }
+.reviewer-col, th.reviewer-col { min-width: 44px; width: 44px; }
+.check-wrap { width: 28px; height: 28px; }
+.check-box { width: 18px; height: 18px; }
+.reviewer-initials { width: 24px; height: 24px; font-size: 9px; }
+.reviewer-name-short { display: none; }
+}
+
+@media (max-width: 500px) {
+.film-name { font-size: 11px; }
+.session-badge { display: none; }
+th.film-col { min-width: 110px; }
+}
+
+.desc-toggle-btn {
+margin-left: auto;
+padding: 5px 12px;
+border-radius: 4px;
+border: 1px solid var(–border);
+background: transparent;
+color: #ffffff;
+font-size: 11px;
+font-weight: 500;
+cursor: pointer;
+font-family: ‘DM Sans’, sans-serif;
+transition: all 0.15s;
+white-space: nowrap;
+}
+.desc-toggle-btn:hover { border-color: var(–accent); color: var(–accent); }
+.desc-toggle-btn.active { border-color: var(–accent); color: var(–accent); background: rgba(245,200,66,0.08); }
+
+tr.desc-row td {
+padding: 0 12px 10px 12px;
+font-size: 12px;
+color: var(–text-dim);
+font-style: italic;
+line-height: 1.5;
+border-bottom: 1px solid rgba(42,47,62,0.5);
+}
+tr.desc-row.hidden { display: none; }
+tr.desc-row td span {
+display: block;
+padding: 6px 10px;
+background: rgba(255,255,255,0.03);
+border-left: 2px solid var(–border);
+border-radius: 0 4px 4px 0;
+}
+
+/* NO RESULTS */
+.no-results {
+text-align: center;
+padding: 40px;
+color: var(–text-dimmer);
+font-style: italic;
+display: none;
+}
+.no-results.visible { display: block; }
 
 </style>
   <!-- Firebase -->
@@ -583,29 +579,32 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-    const firebaseConfig = {
-      apiKey:            "AIzaSyBKzDbYGf9J7pPLEcDNFRy7Lw-MFplJON0",
-      authDomain:        "sofa-screenings.firebaseapp.com",
-      projectId:         "sofa-screenings",
-      storageBucket:     "sofa-screenings.firebasestorage.app",
-      messagingSenderId: "211506216878",
-      appId:             "1:211506216878:web:d69095c28335e32c0a123f",
-      databaseURL:       "https://sofa-screenings-default-rtdb.firebaseio.com"
-    };
+```
+const firebaseConfig = {
+  apiKey:            "AIzaSyBKzDbYGf9J7pPLEcDNFRy7Lw-MFplJON0",
+  authDomain:        "sofa-screenings.firebaseapp.com",
+  projectId:         "sofa-screenings",
+  storageBucket:     "sofa-screenings.firebasestorage.app",
+  messagingSenderId: "211506216878",
+  appId:             "1:211506216878:web:d69095c28335e32c0a123f",
+  databaseURL:       "https://sofa-screenings-default-rtdb.firebaseio.com"
+};
 
-    const app = initializeApp(firebaseConfig);
-    const db  = getDatabase(app);
+const app = initializeApp(firebaseConfig);
+const db  = getDatabase(app);
 
-    window._fbSet = (key, val) => set(ref(db, 'checks/' + key), val);
-    window._fbListen = (callback) => {
-      onValue(ref(db, 'checks'), snapshot => {
-        callback(snapshot.val() || {});
-      });
-    };
+window._fbSet = (key, val) => set(ref(db, 'checks/' + key), val);
+window._fbListen = (callback) => {
+  onValue(ref(db, 'checks'), snapshot => {
+    callback(snapshot.val() || {});
+  });
+};
 
-    // Signal to main script that Firebase is ready
-    window._fbReady = true;
-    window.dispatchEvent(new Event('firebase-ready'));
+// Signal to main script that Firebase is ready
+window._fbReady = true;
+window.dispatchEvent(new Event('firebase-ready'));
+```
+
   </script>
 </head>
 <body>
@@ -721,709 +720,702 @@ const REVIEWERS = [
 ];
 
 const FILMS = [
-  // ── THURSDAY ──
-  { day:'Thursday', session:'morning',   title:'Flight of Our Lives',                        author:'Evan Koup',               runtime:'00:05:00', desc:'An ostrich, a penguin, and a kiwi build a plane to fulfill their dreams of wanting to fly.' },
-  { day:'Thursday', session:'morning',   title:'Sleep on the Wing',                          author:'Abby Stevens',            runtime:'00:04:00', desc:'Dream of flight and exploring unknown places.' },
-  { day:'Thursday', session:'morning',   title:'Exploration In Z',                           author:'Buddy Peterson',          runtime:'00:05:00', desc:'A camera\'s journey through various, strange rooms.' },
-  { day:'Thursday', session:'morning',   title:'Double Destruction',                         author:'Joshua Mizan',            runtime:'00:06:00', desc:'Two brothers in a VR zombie experience that ties their real world with the VR world as they unknowingly cause destruction in the house.' },
-  { day:'Thursday', session:'morning',   title:'PAPER-CUTS',                                 author:'Jack Roscoe',             runtime:'00:05:00', desc:'Drawings from a girl\'s sketchbook celebrate a reunion through a series of interviews and accounts.' },
-  { day:'Thursday', session:'morning',   title:'Complimentary',                              author:'Chris Cheetham',          runtime:'00:04:00', desc:'Two characters express emotions of longing and joy through two different styles of dance, modern and ballet.' },
-  { day:'Thursday', session:'morning',   title:'Storm Churners',                             author:'Koda Brittingham',        runtime:'00:06:00', desc:'Two cows chase the storm of a lifetime but get a little mixed up in the aftermath.' },
-  { day:'Thursday', session:'morning',   title:'4 Years Are Up',                             author:'Marica Joseph',           runtime:'00:20:00', desc:'Academically structured through life, Solenne steers off course to study abroad in Japan for her final semester.' },
-  { day:'Thursday', session:'morning',   title:"Alana George's 2D Rigging Capstone",         author:'Alana George',            runtime:'00:14:00' },
-  { day:'Thursday', session:'morning',   title:'Tucker_AnimDemoCapstone_042726',             author:'Nick Tucker',             runtime:'00:14:00', desc:'3D Animation Demo Fight Sequence.' },
-  { day:'Thursday', session:'morning',   title:'Rise of the Necrodancers',                   author:'Jack Yasharian',          runtime:'00:06:00', desc:'There has been a zombie outbreak in a small town on the night of a big house party, as the partygoers try desperately to fend off the undead they find that their enemy may be more interested in their beats than their brains.' },
-  { day:'Thursday', session:'morning',   title:'Evans_Watchdog_042426',                      author:'Madeline Evans',          runtime:'00:11:00', desc:'A livestock dog realizes what protecting his master\'s flock truly entails.' },
-  { day:'Thursday', session:'morning',   title:'Defective Detective',                        author:'Christian Alarie',        runtime:'00:09:00', desc:'An alcoholic private investigator accepts a case that hits a little too close to home.' },
-  { day:'Thursday', session:'morning',   title:'Elijah Jolicoeur',                           author:'Elijah Jolicoeur',        runtime:'00:20:00', desc:'A mother goblin explores the jungles of Chiropteden to find a meal.' },
-  { day:'Thursday', session:'morning',   title:'Search!',                                    author:'Nikhita Kapoor',          runtime:'00:05:00', desc:'Three small creatures journey through a forest gathering various items.' },
-  { day:'Thursday', session:'morning',   title:'In the Aftermath',                           author:'Asriel Burnett',          runtime:'00:06:00', desc:'A lizard struggles to hunt for food.' },
-  { day:'Thursday', session:'morning',   title:'Grounded Together',                          author:'Avery Sauers',            runtime:'00:07:00', desc:'An injured bird yearns to fly, but finds out that companionship is more fulfilling than a mended wing.' },
-  { day:'Thursday', session:'morning',   title:'QDA_Path_Forward_FinalCutWIP3',              author:'Quinn Adams',             runtime:'00:05:00', desc:'A man decides to travel the world for unknown purposes.' },
-  { day:'Thursday', session:'morning',   title:'Boogie Man',                                 author:'Robert Welton',           runtime:'00:12:00', desc:'The disgusting stories three tissues tell each other eventually take a turn for the worst.' },
-  { day:'Thursday', session:'morning',   title:'Damocles',                                   author:'Vic Kirker',              runtime:'00:05:00', desc:'A woman struggles to live normally while a magic shapeshifting sword berates her.' },
-  { day:'Thursday', session:'morning',   title:'Drawing Flies',                              author:'Penny Horetzke',          runtime:'00:05:00', desc:'A less than harmonious group of friends have a heated disagreement about the best way to solve the problem they\'ve found themselves in.' },
-  { day:'Thursday', session:'morning',   title:'When Dogs Dream',                            author:'G Quinn',                 runtime:'00:06:00', desc:'A dog navigates the magical world in his dreams.' },
-  { day:'Thursday', session:'afternoon', title:'Last Night Out',                             author:'Ronan Wun',               runtime:'00:17:00', desc:'Viktor must find his sister after an announcement causes her to pull an Irish goodbye.' },
-  { day:'Thursday', session:'afternoon', title:'N O W H E R E',                             author:'Parker Fuller',           runtime:'00:11:00', desc:'The first three mini episodes of a mixed media horror web series.' },
-  { day:'Thursday', session:'afternoon', title:'Would You Love Me if I was A Wyrm?',         author:'Daisy Liani',             runtime:'00:05:00', desc:'Overhearing rumours of his bride-to-be, a young boy defies age old traditions and seeks out his bride, who appears not as she seems.' },
-  { day:'Thursday', session:'afternoon', title:'Gone Fishing',                               author:'Michaela Velez',          runtime:'00:05:00', desc:'An old man enjoys a peaceful boat ride through his riverside town.' },
-  { day:'Thursday', session:'afternoon', title:'Stays in Motion',                            author:'Benjamin Mejia',          runtime:'00:05:00', desc:'A sheep travels the world, gathering the attention of confused onlookers.' },
-  { day:'Thursday', session:'afternoon', title:"Goodnight Gamblin'",                         author:'Isabela Mutart Gomez',    runtime:'00:05:00' },
-  { day:'Thursday', session:'afternoon', title:'Just Be',                                    author:'Hannah C. Lee',           runtime:'00:05:00', desc:'In the attempts of reaching a friend who he hasn\'t heard from in a few days, a boy visits his best friend to check on their wellbeing.' },
-  { day:'Thursday', session:'afternoon', title:'Pareidolia',                                 author:'Anna Widger',             runtime:'00:05:00', desc:'A faceless man struggles to create his perfect face.' },
-  { day:'Thursday', session:'afternoon', title:'WurtzelTinker_MadeWithLove_042626',          author:'Galena Wurtzel',          runtime:'00:08:00', desc:'A traveler and soup wizard find the ingredients for romance.' },
-  { day:'Thursday', session:'afternoon', title:'Catch and Release',                          author:'Katharine Boardman',      runtime:'00:05:00', desc:'Follow along as a little anchovy faces a string of dangerous situations.' },
-  { day:'Thursday', session:'afternoon', title:'Metrospective',                              author:'Girvan M. Singh',         runtime:'00:06:00', desc:'A reminiscence of a time with friends after one of them passes away.' },
-  { day:'Thursday', session:'afternoon', title:'Un Souvenir Perdu Final Cut',                author:'Mika Szabo',              runtime:'00:08:00', desc:'A visual poem about dreams.' },
-  { day:'Thursday', session:'afternoon', title:'Hollow Eve',                                 author:'K-Leigh Hodgdon',         runtime:'00:04:00', desc:'Held captive by a pumpkin-headed nightmare known as "Mother," a survivor is fitted with her own Jack O Lantern mask, forced to stare through the hollow eyes of a "perfect" smile as the vines surround her.' },
-  { day:'Thursday', session:'afternoon', title:'Groove',                                     author:'Ceian Thomas',            runtime:'00:04:00', desc:'When the right people link up, the party never stops!' },
-  { day:'Thursday', session:'afternoon', title:'Sense of Static',                            author:'Nicholas Richard',        runtime:'00:08:00', desc:'Memories fade, but to me it always feels like something is there. Like a form of static in my head even past memories being recognizable.' },
-  { day:'Thursday', session:'afternoon', title:'Reverie',                                    author:'Nicholas Richard',        runtime:'00:18:00', desc:'After losing her friend, Cas tries to avoid her grief by using daydreams as a way of escape.' },
-  { day:'Thursday', session:'afternoon', title:'Flora Fauna',                                author:'Anna Fontaine',           runtime:'00:06:00', desc:'A wolf and a rams reciprocal death leads to new life.' },
-  { day:'Thursday', session:'afternoon', title:'Malachite',                                  author:'Sophia Wyse',             runtime:'00:07:00', desc:'A painter gets in an accident.' },
-  { day:'Thursday', session:'afternoon', title:'Femicide',                                   author:'Alex Coleman',            runtime:'00:10:00', desc:'An experimental documentary following and depicting the pain of women after the overturning of Roe v Wade and the war on abortion.' },
-  { day:'Thursday', session:'afternoon', title:'CODEPENDENCY',                               author:'Dyana Sierra',            runtime:'00:05:00', desc:'Two girls become one from the "power of love."' },
-  { day:'Thursday', session:'afternoon', title:'Frame of Mind',                              author:'Jackson Canedy',          runtime:'00:12:00', desc:'A mysterious box of old slides pulls young artist Sam into a world where memories corrupt. She must navigate love, loss, and growing darkness lurking in familiar places.' },
-  { day:'Thursday', session:'afternoon', title:'Go The Distance',                            author:'Ava Schnoor',             runtime:'00:12:00', desc:'Luca Spagnolo, an ultradistance runner, undertakes an 11 week journey around New York\'s Finger Lakes, revealing how preparation, suffering, and commitment can transform an impossible idea into a deeply personal achievement.' },
-  { day:'Thursday', session:'afternoon', title:'SharpKai_AFlightToRemember_Trim',            author:'Kai Sharp',               runtime:'00:05:00', desc:'A boy makes his own jetpack and flies it around a city.' },
-  { day:'Thursday', session:'afternoon', title:'machina',                                    author:'Daniel Noonan',           runtime:'00:08:00', desc:'A man wants to experience life.' },
-  { day:'Thursday', session:'afternoon', title:'dAlsie',                                     author:'Charlotte Wismer',        runtime:'00:07:00', desc:'When a human\'s new AI chatbot coaxes them to become immersed in the online world, they cannot get enough of the constant affirmation and simulated socialization. Meanwhile, in the real world, their physical state begins facing the consequences of loneliness and lack of humanity.' },
-  { day:'Thursday', session:'afternoon', title:'Impermanence',                               author:'Sharon Bennett',          runtime:'00:03:00', desc:'A rat tries to get his prize during the end of the world.' },
-  { day:'Thursday', session:'afternoon', title:'Kaul_ChewBeforeYouSwallow_042726',           author:'Tanishka Kaul',           runtime:'00:04:00', desc:'This film is about a girl and her struggle with a Binge eating disorder and Body dysmorphia.' },
-  { day:'Thursday', session:'afternoon', title:'Starstruck',                                 author:'Tyler Dalmedo',           runtime:'00:06:00', desc:'A cute little alien has a comical interaction with the humans he loves.' },
-  // ── FRIDAY ──
-  { day:'Friday', session:'morning',   title:'MORBID_Captioned_FINAL',                       author:'Vienna Kayser',           runtime:'00:19:00', desc:'N/A' },
-  { day:'Friday', session:'morning',   title:'Documentary Field Practices 2026 Class Reel',  author:'Michaela Ireland',        runtime:'00:10:00', desc:'Documentary Field Practices 2026 Class Reel.' },
-  { day:'Friday', session:'morning',   title:'Time Capsule',                                 author:'Ariel Haak',              runtime:'00:17:00', desc:'How do you say goodbye to the room that\'s carried your life for 18 years? As she packs away the only life she\'s ever known, Soph must figure out if she can let go of her childhood and step into the unknown of college.' },
-  { day:'Friday', session:'morning',   title:'SCOURGE',                                      author:'Adam Winship',            runtime:'00:09:00', desc:'A man and a monster fight for the power of the artifact!' },
-  { day:'Friday', session:'morning',   title:'Cutting Ties',                                 author:'Brian Biglin',            runtime:'00:06:00', desc:'Two boys traverse a mountain tied together with a rope.' },
-  { day:'Friday', session:'morning',   title:'All Eyes On Me',                               author:'Gwen Sievers',            runtime:'00:05:00', desc:'After finding out that her world isn\'t as it seems, Aya follows a mysterious man to figure out what\'s happening to her world.' },
-  { day:'Friday', session:'morning',   title:'PANOPTICON',                                   author:'Brennen Sullivan',        runtime:'00:08:00', desc:'A mixed-media experimental film about mass surveillance, social isolation, and the power of community.' },
-  { day:'Friday', session:'morning',   title:'Hubris',                                       author:'Malachi Spight',          runtime:'00:05:00', desc:'A little ant is hungry and will do anything to get what he wants.' },
-  { day:'Friday', session:'morning',   title:'Costantini_PbandWinnie_042626mp4',             author:'Tatum Costantini',        runtime:'00:04:00', desc:'N/A' },
-  { day:'Friday', session:'morning',   title:'Mr. Brown & Mr. Black',                        author:'Kiley Vande Geest',       runtime:'00:04:00', desc:'A young girl\'s imagination runs wild as her mom teaches her how to read.' },
-  { day:'Friday', session:'morning',   title:'Maia and the Lizard',                          author:'Cy Starr',                runtime:'00:05:00', desc:'A kitten plays around a pool deck when a lizard appears and leads her on a treacherous chase.' },
-  { day:'Friday', session:'morning',   title:'The Fox, the Bear, and the Shrew',             author:'Alicja Domagala',         runtime:'00:05:00', desc:'Three forest animals prepare for a winter storm.' },
-  { day:'Friday', session:'morning',   title:'Family Portrait',                              author:'Ryan Fay',                runtime:'00:05:00', desc:'A single, unbroken view of a family kitchen becomes a witness to a child\'s life, as family memories unfold over the years, culminating in his move away.' },
-  { day:'Friday', session:'morning',   title:'DINNER',                                       author:'Phil Akpinar',            runtime:'00:05:00', desc:'A guy puts a dog on a table.' },
-  { day:'Friday', session:'morning',   title:'Rowan Weislogel Sound Craft Capstone Presentation', author:'Rowan Weislogel',   runtime:'00:20:00', desc:'This presentation covers my experience and processes that I used to sound design multiple capstones in my graduating year.' },
-  { day:'Friday', session:'morning',   title:'ULTRAVIOLET',                                  author:'Jay Leuschner',           runtime:'00:06:00', desc:'A journey of emotions and childhood whimsy through live action and animation collage.' },
-  { day:'Friday', session:'morning',   title:'Gossamer',                                     author:'Hannah Malkin',           runtime:'00:06:00', desc:'A girl chases a butterfly through the woods late at night, but she begins to stray further and further from herself along the way.' },
-  { day:'Friday', session:'morning',   title:'Instinct',                                     author:'Iris Robinson',           runtime:'00:07:00', desc:'A character is torn between morality and carnal desire.' },
-  { day:'Friday', session:'morning',   title:'SIDE A',                                       author:'Leo Tunis',               runtime:'00:11:00', desc:'Filmmaker tries to find out what records mean to people.' },
-  { day:'Friday', session:'morning',   title:'Handle With Care',                             author:'Eli Jeffery',             runtime:'00:06:00', desc:'A young boy discovers a suitcase with the power to shape the world around him.' },
-  { day:'Friday', session:'morning',   title:'Coalesce',                                     author:'Danielle Dukofsky',       runtime:'00:08:00', desc:'A woman goes on a journey, discovering pieces throughout various abstract worlds that help her gain abilities, fostering a clearer sense of self and confidence.' },
-  { day:'Friday', session:'morning',   title:'Osmosis',                                      author:'Sanjay Kartik',           runtime:'00:05:00', desc:'Amidst a drought in a hiking forest at night, an elder mushroom searches to find a cure for his sick grandson.' },
-  { day:'Friday', session:'morning',   title:"I'll Always Be There",                         author:'Hayden Jessiman',         runtime:'00:06:00' },
-  { day:'Friday', session:'morning',   title:'Hocus Bogus',                                  author:'Ryan Bevins',             runtime:'00:06:00', desc:'A street magician must dupe real wizards at a magic academy.' },
-  { day:'Friday', session:'morning',   title:'Recharge',                                     author:'Nathan Sheehan',          runtime:'00:06:00', desc:'A young video game obsessed boys controller dies and is forced outside into nature.' },
-  { day:'Friday', session:'morning',   title:'Inheritance',                                  author:'Michaela Ireland',        runtime:'00:12:00', desc:'When a monster is accidentally summoned at a sleepover, a teen monster hunter must confront her past to protect her best friend.' },
-  { day:'Friday', session:'morning',   title:'Narcissus',                                    author:'Lydia Manley',            runtime:'00:05:00', desc:'Narcissus struggles with their identity.' },
-  { day:'Friday', session:'afternoon', title:'CROWMAN',                                      author:'Asher Gordon',            runtime:'00:09:00', desc:'The prologue to the story of Crowman, struggling with his inner self.' },
-  { day:'Friday', session:'afternoon', title:'The Geese Own the Bus Stop',                   author:'Hannah Mathew',           runtime:'00:09:00', desc:'A med student falls into a protection racket with the local mafia of geese while trying to buy his groceries peacefully.' },
-  { day:'Friday', session:'afternoon', title:'The Intervention',                             author:'Theodore Ignatovsky',     runtime:'00:12:00', desc:'A recovering alcoholic is confronted by their past.' },
-  { day:'Friday', session:'afternoon', title:'Twined',                                       author:'Sadie Rolle-Knox',        runtime:'00:08:00', desc:'A short experimental film exploring the significance of hair braiding and history.' },
-  { day:'Friday', session:'afternoon', title:'Jam!',                                         author:'Katelynn Kosek',          runtime:'00:06:00', desc:'A traveler stumbles upon a lone, elderly woman running a strange enchanted jam shop. She is quite overbearing though... should that be feared or loved?' },
-  { day:'Friday', session:'afternoon', title:'Water Weight',                                 author:'Keana Sifora Gamaro',     runtime:'00:06:00', desc:'A male seahorse grapples with his pregnancy.' },
-  { day:'Friday', session:'afternoon', title:'Where I Come From',                            author:'Franklin Dashman',        runtime:'00:12:00', desc:'A filmmaker explores his adoption process through interviews with his brother and parents.' },
-  { day:'Friday', session:'afternoon', title:"Wally, Willy, and Lilly: Skedaddelin' Sychos", author:'Cyruss Bell',            runtime:'00:08:00' },
-  { day:'Friday', session:'afternoon', title:'Love Byte',                                    author:'Ava Badyrka',             runtime:'00:07:00', desc:'A lonely vampire learns there\'s more to life than being in a relationship.' },
-  { day:'Friday', session:'afternoon', title:'DillonSharp_Milo04232026',                     author:'Dillon Sharp',            runtime:'00:07:00', desc:'Milo uses his headphones to escape from his parents argument. Until it intrudes into his own reality and he has to confront them.' },
-  { day:'Friday', session:'afternoon', title:'Call Out To You',                              author:'Shams Belal',             runtime:'00:17:00', desc:'Blurring dreams and family, a struggling singer-songwriter sings around the city to fulfill his promise to his bedridden mother.' },
-  { day:'Friday', session:'afternoon', title:'Me Fui con Ella (I Left with Her)',            author:'Gabriel Ponte-Fleary',    runtime:'00:28:00', desc:'Driven by hope for a better future, a determined teenager battles the pull between his mother\'s desperate plea to keep him safe and his own conviction to take a stand.' },
-  { day:'Friday', session:'afternoon', title:'Spencer Marchese-Ragona',                      author:'Spencer Marchese-Ragona', runtime:'00:20:00', desc:'An overview of my capstone journey on Morbid and Me Fui Con Ella.' },
-  { day:'Friday', session:'afternoon', title:'Lily Ocque',                                   author:'Lily Ocque',              runtime:'00:19:00', desc:'My experience creating the visuals of two very distinct films!' },
-  { day:'Friday', session:'afternoon', title:'Dialectic',                                    author:'Emily Sugar',             runtime:'00:13:00', desc:'Tessa becomes increasingly distracted by her intrusive thoughts and internal judgement to them.' },
-  { day:'Friday', session:'afternoon', title:'Secret Harvest AM Radio',                      author:'Ethan King',              runtime:'00:19:00', desc:'The mysterious host of a call in radio station must navigate friendship with three curious fans which he keeps at arms length.' },
-  { day:'Friday', session:'afternoon', title:'A Prom for the Stars_Tier1_LSherron',          author:'Lucas Sherron',           runtime:'00:20:00', desc:'On the night of prom, a rule-following teen stumbles upon an alien refugee in the school and must evade authority figures, forcing him to defy expectations and use the power of music to help his newfound extraterrestrial friend.' },
-  { day:'Friday', session:'afternoon', title:'Dead Girl Walking',                            author:'Tali Nickels',            runtime:'00:04:00', desc:'A zombie rises from the dead for one last tryst with her lover.' },
-  // ── SATURDAY ──
-  { day:'Saturday', session:'morning',   title:'LEMPERT_SYNTERESIS_042626',                  author:'Stefen Lempert',          runtime:'00:11:00', desc:'A girl and her robot vs an AI corporation.' },
-  { day:'Saturday', session:'morning',   title:'The Hafferty Sisters: A Character Tech Demo', author:'Madeline van Wijngaarden',runtime:'00:15:00' },
-  { day:'Saturday', session:'morning',   title:'Out of Water',                               author:'Avery Bender',            runtime:'00:10:00', desc:'Max is tasked with training a new hire Markus as a budding romance forms.' },
-  { day:'Saturday', session:'morning',   title:'Carson Munn',                                author:'Carson Munn',             runtime:'00:20:00', desc:'Editing Craft Track Presentation.' },
-  { day:'Saturday', session:'morning',   title:'The Last Act',                               author:'Taylor Smith',            runtime:'00:08:00', desc:'N/A' },
-  { day:'Saturday', session:'morning',   title:'Up in Flames',                               author:'Jora Kupetsky',           runtime:'00:20:00', desc:'A breakup story that reflects reality.' },
-  { day:'Saturday', session:'morning',   title:'The Interview',                              author:'Gianneska Eizabel Romero',runtime:'00:08:00' },
-  { day:'Saturday', session:'morning',   title:'Free from Perfect',                          author:'Melody Huang',            runtime:'00:08:00', desc:'Breaking free from the expectations and pressure to be perfect.' },
-  { day:'Saturday', session:'morning',   title:'Demons',                                     author:'Bobby Pizzingrillo',      runtime:'00:05:00', desc:'A child gets ready to fight his sleep paralysis demon.' },
-  { day:'Saturday', session:'morning',   title:'Is Phil in This?',                           author:'Stewart Moran',           runtime:'00:10:00', desc:'A look into SOFA actor Phil Petranto\'s storied career, and what keeps him coming back.' },
-  { day:'Saturday', session:'morning',   title:'Brandes_CraftTrackPresentation_041826',      author:'Scout Brandes',           runtime:'00:17:00', desc:'Scout Brandes\' senior craft track presentation for sound 2026.' },
-  { day:'Saturday', session:'morning',   title:'Rob and Bob Rob a Train',                    author:'Dexter Hartsfield',       runtime:'00:12:00', desc:'Two robbers compete to rob a train and need to work together.' },
-  { day:'Saturday', session:'morning',   title:'McGinnis.King.Of.Instruments',               author:'Boothe McGinnis',         runtime:'00:16:00', desc:'In the idyllic Finger Lakes countryside of New York state, an eclectic community of pipe organ builders share the joys and challenges of maintaining majestic musical instruments in the 21st century.' },
-  { day:'Saturday', session:'morning',   title:'Wildwood',                                   author:'Eddie Siechen',           runtime:'00:17:00', desc:'As middle school approaches, Amelia tries to hang onto her sense of imagination in what might be her final adventure with her little brother.' },
-  { day:'Saturday', session:'morning',   title:'72 Hours on Gardraxis',                      author:'Benjamin Cragle',         runtime:'00:20:00', desc:'Stranded on an alien planet, a space explorer is reunited with her absent father. The two must put their past aside and escape the mysterious infection lying in the planet\'s atmosphere.' },
-  { day:'Saturday', session:'morning',   title:'Virtual Production Class Reel',              author:'Aidan Montag',            runtime:'00:14:00', desc:'Three prototype commercials, produced by the virtual production class as exercises in in-camera visual effects, motion capture, and motion control.' },
-  { day:'Saturday', session:'morning',   title:'Royster_TheFinalCampaignTrim_042626 (2)',    author:'Justin Royster',          runtime:'00:15:00', desc:'Oliver, with the help of his Dungeon Master, uses this DND Campaign to tell his longtime friends a long awaited secret.' },
-  { day:'Saturday', session:'afternoon', title:'Capstone Presentation: Painting and Animating Cinemagraphs', author:'Miranda Lenaghan', runtime:'00:14:00', desc:'A look into the process behind animating illustrated landscapes.' },
-  { day:'Saturday', session:'afternoon', title:'Ellie Meyer',                                author:'Ellie Meyer',             runtime:'00:20:00', desc:'Senior screenwriting craft track presentation and proof of concept.' },
-  { day:'Saturday', session:'afternoon', title:"Evan Roos's Craft Track Presentation",       author:'Evan Roos',               runtime:'00:20:00' },
-  { day:'Saturday', session:'afternoon', title:'Stale Bread',                                author:'Jake Smith',              runtime:'00:20:00', desc:'A priest must decide whether or not he can look past his feelings for his best friend after promising to officiate his wedding.' },
-  { day:'Saturday', session:'afternoon', title:'Hallie Allport',                             author:'Hallie Allport',          runtime:'00:20:00', desc:'Hallie\'s craft presentation.' },
-  { day:'Saturday', session:'afternoon', title:'Nuns, Girls, and Communist Cancerous Draculas', author:'Sara Amadeo',          runtime:'00:20:00', desc:'Sara Amadeo\'s Cinematography Craft Track Presentation.' },
-  { day:'Saturday', session:'afternoon', title:'Coleman_2GaysPOC_041826',                    author:'Alex Coleman',            runtime:'00:18:00', desc:'N/A' },
-  { day:'Saturday', session:'afternoon', title:'Eureka_Final_Color_Rec709_w_credits',        author:'Lindsey Hecker',          runtime:'00:19:00', desc:'A girl with anxiety throws a party to impress her long-time crush, but her mental health issues come to the surface when it all goes to crap.' },
-  { day:'Saturday', session:'afternoon', title:'Mabelen Bonifacio',                          author:'Mabelen Bonifacio',       runtime:'00:20:00', desc:'My Editing Craft Track Presentation!' },
-  { day:'Saturday', session:'afternoon', title:'STARHEAD!! The Pilot',                       author:'Samara Reid',             runtime:'00:14:00', desc:'Two amateur space cadets attempt to save their captain from a dastardly villain.' },
-  { day:'Saturday', session:'afternoon', title:'BANANA KING',                                author:'Sean Campbell',           runtime:'00:11:00', desc:'Various primates fight over the staff that once belonged to the powerful Monkey King.' },
-  { day:'Saturday', session:'afternoon', title:'Jack Barry: Cinematography Craft Presentation', author:'Jack Barry',          runtime:'00:20:00', desc:'Jack Barry takes you behind the scenes of the alien planet and energetic dance floor of his two capstone projects.' },
-  { day:'Saturday', session:'afternoon', title:'Noise Within',                               author:'Joey Ausanio',            runtime:'00:14:00', desc:'When an internal cochlear implant malfunctions twenty years after surgery, a Deaf woman is consumed by tinnitus and forced into a high-stakes decision with no clear way back.' },
-  { day:'Saturday', session:'afternoon', title:'Mia Srivastava',                             author:'Mia Srivastava',          runtime:'00:20:00', desc:'Sound craft track presentation focusing on Out of Water, an animation capstone, and A Prom For The Stars, a live action capstone.' },
-  // ── SUNDAY ──
-  { day:'Sunday', session:'morning',   title:'Beyond The Grove',                             author:'Mandy Fletcher',          runtime:'00:19:00', desc:'Beyond the Grove is a 2D animated show pitch about a bunny finding herself in a world not built for her.' },
-  { day:'Sunday', session:'morning',   title:'VENTUS RIG - A 3D Rigging Capstone by Eli Papandrea', author:'Eli Papandrea',  runtime:'00:14:00', desc:'VENTUS is a 3D Horse Rig for animating in Maya.' },
-  { day:'Sunday', session:'morning',   title:'K.C. Singleton Craft Track Presentation',      author:'Karston Singleton',       runtime:'00:20:00', desc:'K.C. Singleton Craft Track Presentation.' },
-  { day:'Sunday', session:'morning',   title:'Kailee Gentles Craft Presentation',            author:'Kailee Gentles',          runtime:'00:20:00', desc:'Kailee\'s Sound Craft Track Presentation.' },
-  { day:'Sunday', session:'morning',   title:'Apple and The World Eater',                    author:'Sarah Chen',              runtime:'00:14:00', desc:'A little girl confronts the cosmic deity that has been eating her world.' },
-  { day:'Sunday', session:'morning',   title:'My Self and Sound',                            author:'Jackson Self',            runtime:'00:20:00', desc:'Jax Self explores his sound journey over the past year.' },
-  { day:'Sunday', session:'morning',   title:'Breaker',                                      author:'Jordan Buterbaugh',       runtime:'00:20:00', desc:'A group of soldiers trapped in an abandoned building fight a light monster.' },
-  { day:'Sunday', session:'morning',   title:'Blair Brown',                                  author:'Blair Brown',             runtime:'00:20:00', desc:'A presentation on my work as a production designer on two capstone films.' },
-  { day:'Sunday', session:'morning',   title:'Kept You Waiting, Huh? - Cine Craft Presentation', author:'Deegan Melchiondo', runtime:'00:20:00', desc:'Cinematography/Color Craft Track Presentation.' },
-  { day:'Sunday', session:'morning',   title:'I Flew Beyond an End',                         author:'Indigo Cisneros',         runtime:'00:12:00', desc:'A cat inside a terrible storm fights to return to a beautiful world.' },
-  { day:'Sunday', session:'morning',   title:'Bear and Ferret',                              author:'Emily Purdum',            runtime:'00:11:00', desc:'Bear struggles to confront his father, Ferret, about his frequent absence.' },
-  { day:'Sunday', session:'morning',   title:'Temple Ruins: A 3D Game Environment Demo',    author:'Sangeeta Greenwald',       runtime:'00:15:00', desc:'A 3D stylized game environment of an abandoned temple in ruins.' },
-  { day:'Sunday', session:'morning',   title:'Alejandro Sanchez-Alonso 2026 Animation DEMO Reel & Craft Track', author:'Alejandro Sanchez-Alonso', runtime:'00:14:00', desc:'My 2026 capstone including my animation demo reel and craft track!' },
-  { day:'Sunday', session:'morning',   title:'Parker Long Visual Effects Craft Presentation', author:'Parker Long',           runtime:'00:20:00', desc:'VFX craft presentation.' },
-  { day:'Sunday', session:'afternoon', title:'Intrepid',                                     author:'Ren Norris',              runtime:'00:13:00', desc:'An obsession with the cosmos leads a girl to the call of the void.' },
-  { day:'Sunday', session:'afternoon', title:'Be Better - Pitch Deck and Proof',             author:'Lou Duchin',              runtime:'00:20:00', desc:'When the alpha-male CEO of an AI company is magically turned into a woman, he must learn to survive in the male-dominated hellscape he\'s created while searching for a way back with the help of his ex and her occult women\'s group.' },
-  { day:'Sunday', session:'afternoon', title:'Drive-Out!',                                   author:'Troy Tedeschi',           runtime:'00:22:00', desc:'At a 60\'s Drive-In Movie Theatre, two teens\' date is going poorly, until some unlikely assistance steps in to help.' },
-  { day:'Sunday', session:'afternoon', title:'Reaper',                                       author:'Chris Moon',              runtime:'00:22:00', desc:'Finding herself lost in the underworld, a tightly strung human with a kind heart forges an unlikely bond with a grim reaper, and the two embark on a journey through the nine circles of hell, confronting the demon overlords that rule each realm with an iron fist.' },
-  { day:'Sunday', session:'afternoon', title:'Free Fall',                                    author:'Katie Schneider',         runtime:'00:14:00', desc:'A young woman is uncertain about participating in her community\'s daily ritual.' },
-  { day:'Sunday', session:'afternoon', title:'Sculpt',                                       author:'Jill Smith',              runtime:'00:17:00', desc:'A clay woman navigates her surreal fleshy home. From room to room, she continuously reshapes herself using her body and the tangible walls to fit through each cavernous door. The house begins to unexpectedly change.' },
-  { day:'Sunday', session:'afternoon', title:'Ananse and The Divine Journey',                author:'Bathscheba Duronvil',      runtime:'00:18:00', desc:'N/A' },
-  { day:'Sunday', session:'afternoon', title:'Cursed With Success',                          author:'Maria Palmeri',           runtime:'00:22:00', desc:'Ruby is takes pride in knowing that every guy she dates becomes successful in some way, but then struggles to be in a real relationship.' },
-  { day:'Sunday', session:'afternoon', title:'Cage Of Ideals',                               author:'Ethan Oakes',             runtime:'00:18:00', desc:'A recluse achieves his lifelong dream of meeting his favorite cartoon character in real life, a dragon named Cotton.' },
-  { day:'Sunday', session:'afternoon', title:"AlMutawa_DanceLikeEveryone'sWatching-ProofofConcept-RITVersion_04272026", author:'A.G Al Mutawa', runtime:'00:25:00' },
-  { day:'Sunday', session:'afternoon', title:'Episode 27',                                   author:'Troy Xia',                runtime:'00:20:00', desc:'Qingtian completes the unfinished chapter of his childhood in the animated world.' },
-  // ── MONDAY ──
-  { day:'Monday', session:'morning',   title:'Beast of Friends',                             author:'Kyren Hartman',           runtime:'00:04:00', desc:'Two friends hide from a beast while confronting a different one within their relationship.' },
-  { day:'Monday', session:'morning',   title:'Historia Naturalis',                           author:'Stephen Burton',          runtime:'00:06:00', desc:'A stop motion journey through a medieval bestiary.' },
-  { day:'Monday', session:'morning',   title:'All Bark',                                     author:'Luiza Kayamori Arroyo',   runtime:'00:03:00', desc:'A dog barks. A lot.' },
-  { day:'Monday', session:'morning',   title:'Shell Of Spells',                              author:'Antonia Jones',           runtime:'00:03:00', desc:'A film about a wizard that wants to hatch an egg.' },
-  { day:'Monday', session:'morning',   title:'Long Critterzsz',                              author:'Eric Strasser',           runtime:'00:03:00', desc:'Polecat-esq animals causing minor havoc around a house.' },
-  { day:'Monday', session:'morning',   title:'Flaherty_TheFreeWormDilemma_04,22,26',         author:'Nate Flaherty',           runtime:'00:05:00', desc:'An underwater argument between a fish and a crab.' },
-  { day:'Monday', session:'morning',   title:'Browne_FittingIn_04272026',                    author:'Ryann Browne',            runtime:'00:05:00', desc:'An alien attempts to blend in with an individual and their dog.' },
-  { day:'Monday', session:'morning',   title:'Chasing the Dragon',                           author:'Parker Fuller',           runtime:'00:16:00', desc:'Video presentation of a semester-long pitch project.' },
-  { day:'Monday', session:'morning',   title:'Nadja',                                        author:'Evan Sukhenko',           runtime:'00:13:00', desc:'Nadja is a biographical Documentary about the challenging life of Nadja Sukhenko.' },
-  { day:'Monday', session:'morning',   title:'Curtin_Ten Feet Away_Showing',                 author:'Nicole Curtin',           runtime:'00:09:00', desc:'Local Larping Esc Group.' },
-  { day:'Monday', session:'morning',   title:'Nathan Armstrong',                             author:'Nathan Armstrong',        runtime:'00:20:00', desc:'Dp work of my two Capstones.' },
-  { day:'Monday', session:'morning',   title:"Darcy's Big Day",                              author:'April Thomas',            runtime:'00:09:00' },
-  { day:'Monday', session:'morning',   title:'Standing on Business',                         author:'Siti Rosbrook',           runtime:'00:07:00', desc:'An obsessive fan hires a priest to bless the cardboard standee she claims to be haunted.' },
-  { day:'Monday', session:'morning',   title:'Yaoi on Ice',                                  author:'Riley Douglass',          runtime:'00:05:00', desc:'Two figure skaters grow closer over a shared interest.' },
-  { day:'Monday', session:'morning',   title:'Star Crossed',                                 author:'Leslie Purcell',          runtime:'00:04:00', desc:'Two people bump into each other on the street causing a cosmic explosion of emotions.' },
-  { day:'Monday', session:'morning',   title:'Watts_HumanNature_042626',                     author:'Audrey Watts',            runtime:'00:05:00', desc:'N/A' },
-  { day:'Monday', session:'morning',   title:'GramGPT_Bell_Richie',                          author:'Richie Bell',             runtime:'00:05:00', desc:'N/A' },
-  { day:'Monday', session:'morning',   title:'Health Potions',                               author:'Sampson Matteson',        runtime:'00:05:00', desc:'Two adventurers attempt to swindle a potion seller.' },
-  { day:'Monday', session:'morning',   title:'Matthew Tallarico',                            author:'Matthew Tallarico',       runtime:'00:15:00', desc:'MPS Shootout.' },
-  { day:'Monday', session:'morning',   title:'Luke Chrzan',                                  author:'Luke Chrzan',             runtime:'00:15:00', desc:'MPS2 Shootout: Canon C300 Mk3 vs Sony FS7 Mk2.' },
-  { day:'Monday', session:'morning',   title:'Bread of the Dead',                            author:'Arely Garcia Leon',       runtime:'00:05:00', desc:'On the Day of the Dead, Suzie remembers her brother by baking and offering sweet bread at his ofrenda.' },
-  { day:'Monday', session:'morning',   title:'Choosing To Be',                               author:'Nicky Champlin',          runtime:'00:06:00', desc:'An old house protects a young stranger as they discover themself.' },
-  { day:'Monday', session:'morning',   title:"Kyle Chong's Cinematography Craft Track Presentation", author:'Kyle Chong',   runtime:'00:19:00' },
-  { day:'Monday', session:'afternoon', title:'Cletus the Cat: A 3D Rigging Demo',            author:'Maggie Slaughter',        runtime:'00:16:00', desc:'A presentation on the creation process of Cletus the Cat: a 3D rigged character.' },
-  { day:'Monday', session:'afternoon', title:'Cobwebs',                                      author:'Sarah A. McMaster',       runtime:'00:09:00', desc:'Not everything is as terrible as it seems.' },
-  { day:'Monday', session:'afternoon', title:'Kresco_Mikayla_Capstone_042726',               author:'Mikayla Kresco',          runtime:'00:20:00', desc:'Character Animation Demo Reel.' },
-  { day:'Monday', session:'afternoon', title:'A Safe Space',                                 author:'Gonzalo Via y Rada',      runtime:'00:17:00', desc:'SAFE SPACE is a documentary about amateurs and professional boxers, from different places around the world, with different cultures, who shared they journey in one space, a small gym at Buffalo, NY.' },
-  { day:'Monday', session:'afternoon', title:'Moloch',                                       author:'Eva Kadagishvili',        runtime:'00:05:00', desc:'A girl is told to go into the woods and finds a cult.' },
-  { day:'Monday', session:'afternoon', title:'KimiaEdrissi-Giraffina-Tier1-Final02_1',       author:'Kimia Edrissi',           runtime:'00:02:00', desc:'N/A' },
-  { day:'Monday', session:'afternoon', title:'Tubborn',                                      author:'Asia Isolano',            runtime:'00:05:00', desc:'A pet creature faces the challenges of avoiding its monthly bath day.' },
-  { day:'Monday', session:'afternoon', title:'TheWitch',                                     author:'Kaija Hjelm',             runtime:'00:11:00', desc:'A young girl seeks out a mysterious witch who has taken up residence in the forest in order to save her friend.' },
-  { day:'Monday', session:'afternoon', title:'Till All Have Heard',                          author:'Trinitee Stokes',         runtime:'00:11:00', desc:'In silent pews, Deaf hearts are left out—because the message of Jesus Christ isn\'t spoken in their language.' },
-  { day:'Monday', session:'afternoon', title:"The Shattered Perception of My Body's Resilience", author:'Riley Bodell',      runtime:'00:08:00' },
-  { day:'Monday', session:'afternoon', title:'where we are now',                             author:'Victoria Pendzick',       runtime:'00:08:00', desc:'An exploration of our past, and how it shapes our present.' },
-  { day:'Monday', session:'afternoon', title:'The Girl, The Hare, and The Sun',              author:'Ali Guzman',              runtime:'00:12:00', desc:'Luna is thrown into the unknown when a mysterious train shows up at night, leading her to a magical circus.' },
-  { day:'Monday', session:'afternoon', title:'All in the Cards',                             author:'Ryan Clouse',             runtime:'00:17:00', desc:'After his dream trading card is stolen by a shady scalper, Mickey must team up with his game night buddies to get it back.' },
-  { day:'Monday', session:'afternoon', title:'Legacy',                                       author:'Theodore Lucas',          runtime:'00:03:00', desc:'A street racing couple\'s plan to leave the underground car world gets thwarted, leaving them with no other choice but to race one last time for their freedom.' },
-  { day:'Monday', session:'afternoon', title:'Sticky Hand Standoff',                         author:'Adelyne Atwell',          runtime:'00:12:00', desc:'When Johnny\'s favorite toys get stolen out of his lunchbox, he must go on a journey to retrieve them.' },
-  { day:'Monday', session:'afternoon', title:'VANITY',                                       author:'Maddi Johnson',           runtime:'00:12:00', desc:'Nepo baby actress, Willow Fox, takes on a role as a serial killer in a hot new thriller, but struggles to become her character.' },
-  { day:'Monday', session:'afternoon', title:'StarlightStarbright_fixedcaptions',            author:'Alyessa Bolander',        runtime:'00:06:00', desc:'A rough crew of pirates finds a unique treasure.' },
-  { day:'Monday', session:'afternoon', title:'SuperAssassin69',                              author:'Lucas Elliott',           runtime:'00:08:00', desc:'An assassin tries to kill a guy.' },
-  { day:'Monday', session:'afternoon', title:'The Bike',                                     author:'Clara LaChance',          runtime:'00:07:00', desc:'A rusty old bike wanders the city looking for a companion.' },
-  { day:'Monday', session:'afternoon', title:'Ethan Spillane Editing Craft Presentation',    author:'Ethan Spillane',          runtime:'00:20:00', desc:'Ethan Spillane\'s editing craft presentation.' },
-  { day:'Monday', session:'afternoon', title:'declan h',                                     author:'Declan Hughes',           runtime:'00:20:00', desc:'p2 class reel.' },
+// ── THURSDAY ──
+{ day:‘Thursday’, session:‘morning’,   title:‘Flight of Our Lives’,                        author:‘Evan Koup’,               runtime:‘00:05:00’, desc:‘An ostrich, a penguin, and a kiwi build a plane to fulfill their dreams of wanting to fly.’ },
+{ day:‘Thursday’, session:‘morning’,   title:‘Sleep on the Wing’,                          author:‘Abby Stevens’,            runtime:‘00:04:00’, desc:‘Dream of flight and exploring unknown places.’ },
+{ day:‘Thursday’, session:‘morning’,   title:‘Exploration In Z’,                           author:‘Buddy Peterson’,          runtime:‘00:05:00’, desc:‘A camera's journey through various, strange rooms.’ },
+{ day:‘Thursday’, session:‘morning’,   title:‘Double Destruction’,                         author:‘Joshua Mizan’,            runtime:‘00:06:00’, desc:‘Two brothers in a VR zombie experience that ties their real world with the VR world as they unknowingly cause destruction in the house.’ },
+{ day:‘Thursday’, session:‘morning’,   title:‘PAPER-CUTS’,                                 author:‘Jack Roscoe’,             runtime:‘00:05:00’, desc:‘Drawings from a girl's sketchbook celebrate a reunion through a series of interviews and accounts.’ },
+{ day:‘Thursday’, session:‘morning’,   title:‘Complimentary’,                              author:‘Chris Cheetham’,          runtime:‘00:04:00’, desc:‘Two characters express emotions of longing and joy through two different styles of dance, modern and ballet.’ },
+{ day:‘Thursday’, session:‘morning’,   title:‘Storm Churners’,                             author:‘Koda Brittingham’,        runtime:‘00:06:00’, desc:‘Two cows chase the storm of a lifetime but get a little mixed up in the aftermath.’ },
+{ day:‘Thursday’, session:‘morning’,   title:‘4 Years Are Up’,                             author:‘Marica Joseph’,           runtime:‘00:20:00’, desc:‘Academically structured through life, Solenne steers off course to study abroad in Japan for her final semester.’ },
+{ day:‘Thursday’, session:‘morning’,   title:“Alana George’s 2D Rigging Capstone”,         author:‘Alana George’,            runtime:‘00:14:00’ },
+{ day:‘Thursday’, session:‘morning’,   title:‘Tucker_AnimDemoCapstone_042726’,             author:‘Nick Tucker’,             runtime:‘00:14:00’, desc:‘3D Animation Demo Fight Sequence.’ },
+{ day:‘Thursday’, session:‘morning’,   title:‘Rise of the Necrodancers’,                   author:‘Jack Yasharian’,          runtime:‘00:06:00’, desc:‘There has been a zombie outbreak in a small town on the night of a big house party, as the partygoers try desperately to fend off the undead they find that their enemy may be more interested in their beats than their brains.’ },
+{ day:‘Thursday’, session:‘morning’,   title:‘Evans_Watchdog_042426’,                      author:‘Madeline Evans’,          runtime:‘00:11:00’, desc:‘A livestock dog realizes what protecting his master's flock truly entails.’ },
+{ day:‘Thursday’, session:‘morning’,   title:‘Defective Detective’,                        author:‘Christian Alarie’,        runtime:‘00:09:00’, desc:‘An alcoholic private investigator accepts a case that hits a little too close to home.’ },
+{ day:‘Thursday’, session:‘morning’,   title:‘Elijah Jolicoeur’,                           author:‘Elijah Jolicoeur’,        runtime:‘00:20:00’, desc:‘A mother goblin explores the jungles of Chiropteden to find a meal.’ },
+{ day:‘Thursday’, session:‘morning’,   title:‘Search!’,                                    author:‘Nikhita Kapoor’,          runtime:‘00:05:00’, desc:‘Three small creatures journey through a forest gathering various items.’ },
+{ day:‘Thursday’, session:‘morning’,   title:‘In the Aftermath’,                           author:‘Asriel Burnett’,          runtime:‘00:06:00’, desc:‘A lizard struggles to hunt for food.’ },
+{ day:‘Thursday’, session:‘morning’,   title:‘Grounded Together’,                          author:‘Avery Sauers’,            runtime:‘00:07:00’, desc:‘An injured bird yearns to fly, but finds out that companionship is more fulfilling than a mended wing.’ },
+{ day:‘Thursday’, session:‘morning’,   title:‘QDA_Path_Forward_FinalCutWIP3’,              author:‘Quinn Adams’,             runtime:‘00:05:00’, desc:‘A man decides to travel the world for unknown purposes.’ },
+{ day:‘Thursday’, session:‘morning’,   title:‘Boogie Man’,                                 author:‘Robert Welton’,           runtime:‘00:12:00’, desc:‘The disgusting stories three tissues tell each other eventually take a turn for the worst.’ },
+{ day:‘Thursday’, session:‘morning’,   title:‘Damocles’,                                   author:‘Vic Kirker’,              runtime:‘00:05:00’, desc:‘A woman struggles to live normally while a magic shapeshifting sword berates her.’ },
+{ day:‘Thursday’, session:‘morning’,   title:‘Drawing Flies’,                              author:‘Penny Horetzke’,          runtime:‘00:05:00’, desc:‘A less than harmonious group of friends have a heated disagreement about the best way to solve the problem they've found themselves in.’ },
+{ day:‘Thursday’, session:‘morning’,   title:‘When Dogs Dream’,                            author:‘G Quinn’,                 runtime:‘00:06:00’, desc:‘A dog navigates the magical world in his dreams.’ },
+{ day:‘Thursday’, session:‘afternoon’, title:‘Last Night Out’,                             author:‘Ronan Wun’,               runtime:‘00:17:00’, desc:‘Viktor must find his sister after an announcement causes her to pull an Irish goodbye.’ },
+{ day:‘Thursday’, session:‘afternoon’, title:‘N O W H E R E’,                             author:‘Parker Fuller’,           runtime:‘00:11:00’, desc:‘The first three mini episodes of a mixed media horror web series.’ },
+{ day:‘Thursday’, session:‘afternoon’, title:‘Would You Love Me if I was A Wyrm?’,         author:‘Daisy Liani’,             runtime:‘00:05:00’, desc:‘Overhearing rumours of his bride-to-be, a young boy defies age old traditions and seeks out his bride, who appears not as she seems.’ },
+{ day:‘Thursday’, session:‘afternoon’, title:‘Gone Fishing’,                               author:‘Michaela Velez’,          runtime:‘00:05:00’, desc:‘An old man enjoys a peaceful boat ride through his riverside town.’ },
+{ day:‘Thursday’, session:‘afternoon’, title:‘Stays in Motion’,                            author:‘Benjamin Mejia’,          runtime:‘00:05:00’, desc:‘A sheep travels the world, gathering the attention of confused onlookers.’ },
+{ day:‘Thursday’, session:‘afternoon’, title:“Goodnight Gamblin’”,                         author:‘Isabela Mutart Gomez’,    runtime:‘00:05:00’ },
+{ day:‘Thursday’, session:‘afternoon’, title:‘Just Be’,                                    author:‘Hannah C. Lee’,           runtime:‘00:05:00’, desc:‘In the attempts of reaching a friend who he hasn't heard from in a few days, a boy visits his best friend to check on their wellbeing.’ },
+{ day:‘Thursday’, session:‘afternoon’, title:‘Pareidolia’,                                 author:‘Anna Widger’,             runtime:‘00:05:00’, desc:‘A faceless man struggles to create his perfect face.’ },
+{ day:‘Thursday’, session:‘afternoon’, title:‘WurtzelTinker_MadeWithLove_042626’,          author:‘Galena Wurtzel’,          runtime:‘00:08:00’, desc:‘A traveler and soup wizard find the ingredients for romance.’ },
+{ day:‘Thursday’, session:‘afternoon’, title:‘Catch and Release’,                          author:‘Katharine Boardman’,      runtime:‘00:05:00’, desc:‘Follow along as a little anchovy faces a string of dangerous situations.’ },
+{ day:‘Thursday’, session:‘afternoon’, title:‘Metrospective’,                              author:‘Girvan M. Singh’,         runtime:‘00:06:00’, desc:‘A reminiscence of a time with friends after one of them passes away.’ },
+{ day:‘Thursday’, session:‘afternoon’, title:‘Un Souvenir Perdu Final Cut’,                author:‘Mika Szabo’,              runtime:‘00:08:00’, desc:‘A visual poem about dreams.’ },
+{ day:‘Thursday’, session:‘afternoon’, title:‘Hollow Eve’,                                 author:‘K-Leigh Hodgdon’,         runtime:‘00:04:00’, desc:‘Held captive by a pumpkin-headed nightmare known as “Mother,” a survivor is fitted with her own Jack O Lantern mask, forced to stare through the hollow eyes of a “perfect” smile as the vines surround her.’ },
+{ day:‘Thursday’, session:‘afternoon’, title:‘Groove’,                                     author:‘Ceian Thomas’,            runtime:‘00:04:00’, desc:‘When the right people link up, the party never stops!’ },
+{ day:‘Thursday’, session:‘afternoon’, title:‘Sense of Static’,                            author:‘Nicholas Richard’,        runtime:‘00:08:00’, desc:‘Memories fade, but to me it always feels like something is there. Like a form of static in my head even past memories being recognizable.’ },
+{ day:‘Thursday’, session:‘afternoon’, title:‘Reverie’,                                    author:‘Nicholas Richard’,        runtime:‘00:18:00’, desc:‘After losing her friend, Cas tries to avoid her grief by using daydreams as a way of escape.’ },
+{ day:‘Thursday’, session:‘afternoon’, title:‘Flora Fauna’,                                author:‘Anna Fontaine’,           runtime:‘00:06:00’, desc:‘A wolf and a rams reciprocal death leads to new life.’ },
+{ day:‘Thursday’, session:‘afternoon’, title:‘Malachite’,                                  author:‘Sophia Wyse’,             runtime:‘00:07:00’, desc:‘A painter gets in an accident.’ },
+{ day:‘Thursday’, session:‘afternoon’, title:‘Femicide’,                                   author:‘Alex Coleman’,            runtime:‘00:10:00’, desc:‘An experimental documentary following and depicting the pain of women after the overturning of Roe v Wade and the war on abortion.’ },
+{ day:‘Thursday’, session:‘afternoon’, title:‘CODEPENDENCY’,                               author:‘Dyana Sierra’,            runtime:‘00:05:00’, desc:‘Two girls become one from the “power of love.”’ },
+{ day:‘Thursday’, session:‘afternoon’, title:‘Frame of Mind’,                              author:‘Jackson Canedy’,          runtime:‘00:12:00’, desc:‘A mysterious box of old slides pulls young artist Sam into a world where memories corrupt. She must navigate love, loss, and growing darkness lurking in familiar places.’ },
+{ day:‘Thursday’, session:‘afternoon’, title:‘Go The Distance’,                            author:‘Ava Schnoor’,             runtime:‘00:12:00’, desc:‘Luca Spagnolo, an ultradistance runner, undertakes an 11 week journey around New York's Finger Lakes, revealing how preparation, suffering, and commitment can transform an impossible idea into a deeply personal achievement.’ },
+{ day:‘Thursday’, session:‘afternoon’, title:‘SharpKai_AFlightToRemember_Trim’,            author:‘Kai Sharp’,               runtime:‘00:05:00’, desc:‘A boy makes his own jetpack and flies it around a city.’ },
+{ day:‘Thursday’, session:‘afternoon’, title:‘machina’,                                    author:‘Daniel Noonan’,           runtime:‘00:08:00’, desc:‘A man wants to experience life.’ },
+{ day:‘Thursday’, session:‘afternoon’, title:‘dAlsie’,                                     author:‘Charlotte Wismer’,        runtime:‘00:07:00’, desc:‘When a human's new AI chatbot coaxes them to become immersed in the online world, they cannot get enough of the constant affirmation and simulated socialization. Meanwhile, in the real world, their physical state begins facing the consequences of loneliness and lack of humanity.’ },
+{ day:‘Thursday’, session:‘afternoon’, title:‘Impermanence’,                               author:‘Sharon Bennett’,          runtime:‘00:03:00’, desc:‘A rat tries to get his prize during the end of the world.’ },
+{ day:‘Thursday’, session:‘afternoon’, title:‘Kaul_ChewBeforeYouSwallow_042726’,           author:‘Tanishka Kaul’,           runtime:‘00:04:00’, desc:‘This film is about a girl and her struggle with a Binge eating disorder and Body dysmorphia.’ },
+{ day:‘Thursday’, session:‘afternoon’, title:‘Starstruck’,                                 author:‘Tyler Dalmedo’,           runtime:‘00:06:00’, desc:‘A cute little alien has a comical interaction with the humans he loves.’ },
+// ── FRIDAY ──
+{ day:‘Friday’, session:‘morning’,   title:‘MORBID_Captioned_FINAL’,                       author:‘Vienna Kayser’,           runtime:‘00:19:00’, desc:‘N/A’ },
+{ day:‘Friday’, session:‘morning’,   title:‘Documentary Field Practices 2026 Class Reel’,  author:‘Michaela Ireland’,        runtime:‘00:10:00’, desc:‘Documentary Field Practices 2026 Class Reel.’ },
+{ day:‘Friday’, session:‘morning’,   title:‘Time Capsule’,                                 author:‘Ariel Haak’,              runtime:‘00:17:00’, desc:‘How do you say goodbye to the room that's carried your life for 18 years? As she packs away the only life she's ever known, Soph must figure out if she can let go of her childhood and step into the unknown of college.’ },
+{ day:‘Friday’, session:‘morning’,   title:‘SCOURGE’,                                      author:‘Adam Winship’,            runtime:‘00:09:00’, desc:‘A man and a monster fight for the power of the artifact!’ },
+{ day:‘Friday’, session:‘morning’,   title:‘Cutting Ties’,                                 author:‘Brian Biglin’,            runtime:‘00:06:00’, desc:‘Two boys traverse a mountain tied together with a rope.’ },
+{ day:‘Friday’, session:‘morning’,   title:‘All Eyes On Me’,                               author:‘Gwen Sievers’,            runtime:‘00:05:00’, desc:‘After finding out that her world isn't as it seems, Aya follows a mysterious man to figure out what's happening to her world.’ },
+{ day:‘Friday’, session:‘morning’,   title:‘PANOPTICON’,                                   author:‘Brennen Sullivan’,        runtime:‘00:08:00’, desc:‘A mixed-media experimental film about mass surveillance, social isolation, and the power of community.’ },
+{ day:‘Friday’, session:‘morning’,   title:‘Hubris’,                                       author:‘Malachi Spight’,          runtime:‘00:05:00’, desc:‘A little ant is hungry and will do anything to get what he wants.’ },
+{ day:‘Friday’, session:‘morning’,   title:‘Costantini_PbandWinnie_042626mp4’,             author:‘Tatum Costantini’,        runtime:‘00:04:00’, desc:‘N/A’ },
+{ day:‘Friday’, session:‘morning’,   title:‘Mr. Brown & Mr. Black’,                        author:‘Kiley Vande Geest’,       runtime:‘00:04:00’, desc:‘A young girl's imagination runs wild as her mom teaches her how to read.’ },
+{ day:‘Friday’, session:‘morning’,   title:‘Maia and the Lizard’,                          author:‘Cy Starr’,                runtime:‘00:05:00’, desc:‘A kitten plays around a pool deck when a lizard appears and leads her on a treacherous chase.’ },
+{ day:‘Friday’, session:‘morning’,   title:‘The Fox, the Bear, and the Shrew’,             author:‘Alicja Domagala’,         runtime:‘00:05:00’, desc:‘Three forest animals prepare for a winter storm.’ },
+{ day:‘Friday’, session:‘morning’,   title:‘Family Portrait’,                              author:‘Ryan Fay’,                runtime:‘00:05:00’, desc:‘A single, unbroken view of a family kitchen becomes a witness to a child's life, as family memories unfold over the years, culminating in his move away.’ },
+{ day:‘Friday’, session:‘morning’,   title:‘DINNER’,                                       author:‘Phil Akpinar’,            runtime:‘00:05:00’, desc:‘A guy puts a dog on a table.’ },
+{ day:‘Friday’, session:‘morning’,   title:‘Rowan Weislogel Sound Craft Capstone Presentation’, author:‘Rowan Weislogel’,   runtime:‘00:20:00’, desc:‘This presentation covers my experience and processes that I used to sound design multiple capstones in my graduating year.’ },
+{ day:‘Friday’, session:‘morning’,   title:‘ULTRAVIOLET’,                                  author:‘Jay Leuschner’,           runtime:‘00:06:00’, desc:‘A journey of emotions and childhood whimsy through live action and animation collage.’ },
+{ day:‘Friday’, session:‘morning’,   title:‘Gossamer’,                                     author:‘Hannah Malkin’,           runtime:‘00:06:00’, desc:‘A girl chases a butterfly through the woods late at night, but she begins to stray further and further from herself along the way.’ },
+{ day:‘Friday’, session:‘morning’,   title:‘Instinct’,                                     author:‘Iris Robinson’,           runtime:‘00:07:00’, desc:‘A character is torn between morality and carnal desire.’ },
+{ day:‘Friday’, session:‘morning’,   title:‘SIDE A’,                                       author:‘Leo Tunis’,               runtime:‘00:11:00’, desc:‘Filmmaker tries to find out what records mean to people.’ },
+{ day:‘Friday’, session:‘morning’,   title:‘Handle With Care’,                             author:‘Eli Jeffery’,             runtime:‘00:06:00’, desc:‘A young boy discovers a suitcase with the power to shape the world around him.’ },
+{ day:‘Friday’, session:‘morning’,   title:‘Coalesce’,                                     author:‘Danielle Dukofsky’,       runtime:‘00:08:00’, desc:‘A woman goes on a journey, discovering pieces throughout various abstract worlds that help her gain abilities, fostering a clearer sense of self and confidence.’ },
+{ day:‘Friday’, session:‘morning’,   title:‘Osmosis’,                                      author:‘Sanjay Kartik’,           runtime:‘00:05:00’, desc:‘Amidst a drought in a hiking forest at night, an elder mushroom searches to find a cure for his sick grandson.’ },
+{ day:‘Friday’, session:‘morning’,   title:“I’ll Always Be There”,                         author:‘Hayden Jessiman’,         runtime:‘00:06:00’ },
+{ day:‘Friday’, session:‘morning’,   title:‘Hocus Bogus’,                                  author:‘Ryan Bevins’,             runtime:‘00:06:00’, desc:‘A street magician must dupe real wizards at a magic academy.’ },
+{ day:‘Friday’, session:‘morning’,   title:‘Recharge’,                                     author:‘Nathan Sheehan’,          runtime:‘00:06:00’, desc:‘A young video game obsessed boys controller dies and is forced outside into nature.’ },
+{ day:‘Friday’, session:‘morning’,   title:‘Inheritance’,                                  author:‘Michaela Ireland’,        runtime:‘00:12:00’, desc:‘When a monster is accidentally summoned at a sleepover, a teen monster hunter must confront her past to protect her best friend.’ },
+{ day:‘Friday’, session:‘morning’,   title:‘Narcissus’,                                    author:‘Lydia Manley’,            runtime:‘00:05:00’, desc:‘Narcissus struggles with their identity.’ },
+{ day:‘Friday’, session:‘afternoon’, title:‘CROWMAN’,                                      author:‘Asher Gordon’,            runtime:‘00:09:00’, desc:‘The prologue to the story of Crowman, struggling with his inner self.’ },
+{ day:‘Friday’, session:‘afternoon’, title:‘The Geese Own the Bus Stop’,                   author:‘Hannah Mathew’,           runtime:‘00:09:00’, desc:‘A med student falls into a protection racket with the local mafia of geese while trying to buy his groceries peacefully.’ },
+{ day:‘Friday’, session:‘afternoon’, title:‘The Intervention’,                             author:‘Theodore Ignatovsky’,     runtime:‘00:12:00’, desc:‘A recovering alcoholic is confronted by their past.’ },
+{ day:‘Friday’, session:‘afternoon’, title:‘Twined’,                                       author:‘Sadie Rolle-Knox’,        runtime:‘00:08:00’, desc:‘A short experimental film exploring the significance of hair braiding and history.’ },
+{ day:‘Friday’, session:‘afternoon’, title:‘Jam!’,                                         author:‘Katelynn Kosek’,          runtime:‘00:06:00’, desc:‘A traveler stumbles upon a lone, elderly woman running a strange enchanted jam shop. She is quite overbearing though… should that be feared or loved?’ },
+{ day:‘Friday’, session:‘afternoon’, title:‘Water Weight’,                                 author:‘Keana Sifora Gamaro’,     runtime:‘00:06:00’, desc:‘A male seahorse grapples with his pregnancy.’ },
+{ day:‘Friday’, session:‘afternoon’, title:‘Where I Come From’,                            author:‘Franklin Dashman’,        runtime:‘00:12:00’, desc:‘A filmmaker explores his adoption process through interviews with his brother and parents.’ },
+{ day:‘Friday’, session:‘afternoon’, title:“Wally, Willy, and Lilly: Skedaddelin’ Sychos”, author:‘Cyruss Bell’,            runtime:‘00:08:00’ },
+{ day:‘Friday’, session:‘afternoon’, title:‘Love Byte’,                                    author:‘Ava Badyrka’,             runtime:‘00:07:00’, desc:‘A lonely vampire learns there's more to life than being in a relationship.’ },
+{ day:‘Friday’, session:‘afternoon’, title:‘DillonSharp_Milo04232026’,                     author:‘Dillon Sharp’,            runtime:‘00:07:00’, desc:‘Milo uses his headphones to escape from his parents argument. Until it intrudes into his own reality and he has to confront them.’ },
+{ day:‘Friday’, session:‘afternoon’, title:‘Call Out To You’,                              author:‘Shams Belal’,             runtime:‘00:17:00’, desc:‘Blurring dreams and family, a struggling singer-songwriter sings around the city to fulfill his promise to his bedridden mother.’ },
+{ day:‘Friday’, session:‘afternoon’, title:‘Me Fui con Ella (I Left with Her)’,            author:‘Gabriel Ponte-Fleary’,    runtime:‘00:28:00’, desc:‘Driven by hope for a better future, a determined teenager battles the pull between his mother's desperate plea to keep him safe and his own conviction to take a stand.’ },
+{ day:‘Friday’, session:‘afternoon’, title:‘Spencer Marchese-Ragona’,                      author:‘Spencer Marchese-Ragona’, runtime:‘00:20:00’, desc:‘An overview of my capstone journey on Morbid and Me Fui Con Ella.’ },
+{ day:‘Friday’, session:‘afternoon’, title:‘Lily Ocque’,                                   author:‘Lily Ocque’,              runtime:‘00:19:00’, desc:‘My experience creating the visuals of two very distinct films!’ },
+{ day:‘Friday’, session:‘afternoon’, title:‘Dialectic’,                                    author:‘Emily Sugar’,             runtime:‘00:13:00’, desc:‘Tessa becomes increasingly distracted by her intrusive thoughts and internal judgement to them.’ },
+{ day:‘Friday’, session:‘afternoon’, title:‘Secret Harvest AM Radio’,                      author:‘Ethan King’,              runtime:‘00:19:00’, desc:‘The mysterious host of a call in radio station must navigate friendship with three curious fans which he keeps at arms length.’ },
+{ day:‘Friday’, session:‘afternoon’, title:‘A Prom for the Stars_Tier1_LSherron’,          author:‘Lucas Sherron’,           runtime:‘00:20:00’, desc:‘On the night of prom, a rule-following teen stumbles upon an alien refugee in the school and must evade authority figures, forcing him to defy expectations and use the power of music to help his newfound extraterrestrial friend.’ },
+{ day:‘Friday’, session:‘afternoon’, title:‘Dead Girl Walking’,                            author:‘Tali Nickels’,            runtime:‘00:04:00’, desc:‘A zombie rises from the dead for one last tryst with her lover.’ },
+// ── SATURDAY ──
+{ day:‘Saturday’, session:‘morning’,   title:‘LEMPERT_SYNTERESIS_042626’,                  author:‘Stefen Lempert’,          runtime:‘00:11:00’, desc:‘A girl and her robot vs an AI corporation.’ },
+{ day:‘Saturday’, session:‘morning’,   title:‘The Hafferty Sisters: A Character Tech Demo’, author:‘Madeline van Wijngaarden’,runtime:‘00:15:00’ },
+{ day:‘Saturday’, session:‘morning’,   title:‘Out of Water’,                               author:‘Avery Bender’,            runtime:‘00:10:00’, desc:‘Max is tasked with training a new hire Markus as a budding romance forms.’ },
+{ day:‘Saturday’, session:‘morning’,   title:‘Carson Munn’,                                author:‘Carson Munn’,             runtime:‘00:20:00’, desc:‘Editing Craft Track Presentation.’ },
+{ day:‘Saturday’, session:‘morning’,   title:‘The Last Act’,                               author:‘Taylor Smith’,            runtime:‘00:08:00’, desc:‘N/A’ },
+{ day:‘Saturday’, session:‘morning’,   title:‘Up in Flames’,                               author:‘Jora Kupetsky’,           runtime:‘00:20:00’, desc:‘A breakup story that reflects reality.’ },
+{ day:‘Saturday’, session:‘morning’,   title:‘The Interview’,                              author:‘Gianneska Eizabel Romero’,runtime:‘00:08:00’ },
+{ day:‘Saturday’, session:‘morning’,   title:‘Free from Perfect’,                          author:‘Melody Huang’,            runtime:‘00:08:00’, desc:‘Breaking free from the expectations and pressure to be perfect.’ },
+{ day:‘Saturday’, session:‘morning’,   title:‘Demons’,                                     author:‘Bobby Pizzingrillo’,      runtime:‘00:05:00’, desc:‘A child gets ready to fight his sleep paralysis demon.’ },
+{ day:‘Saturday’, session:‘morning’,   title:‘Is Phil in This?’,                           author:‘Stewart Moran’,           runtime:‘00:10:00’, desc:‘A look into SOFA actor Phil Petranto's storied career, and what keeps him coming back.’ },
+{ day:‘Saturday’, session:‘morning’,   title:‘Brandes_CraftTrackPresentation_041826’,      author:‘Scout Brandes’,           runtime:‘00:17:00’, desc:‘Scout Brandes' senior craft track presentation for sound 2026.’ },
+{ day:‘Saturday’, session:‘morning’,   title:‘Rob and Bob Rob a Train’,                    author:‘Dexter Hartsfield’,       runtime:‘00:12:00’, desc:‘Two robbers compete to rob a train and need to work together.’ },
+{ day:‘Saturday’, session:‘morning’,   title:‘McGinnis.King.Of.Instruments’,               author:‘Boothe McGinnis’,         runtime:‘00:16:00’, desc:‘In the idyllic Finger Lakes countryside of New York state, an eclectic community of pipe organ builders share the joys and challenges of maintaining majestic musical instruments in the 21st century.’ },
+{ day:‘Saturday’, session:‘morning’,   title:‘Wildwood’,                                   author:‘Eddie Siechen’,           runtime:‘00:17:00’, desc:‘As middle school approaches, Amelia tries to hang onto her sense of imagination in what might be her final adventure with her little brother.’ },
+{ day:‘Saturday’, session:‘morning’,   title:‘72 Hours on Gardraxis’,                      author:‘Benjamin Cragle’,         runtime:‘00:20:00’, desc:‘Stranded on an alien planet, a space explorer is reunited with her absent father. The two must put their past aside and escape the mysterious infection lying in the planet's atmosphere.’ },
+{ day:‘Saturday’, session:‘morning’,   title:‘Virtual Production Class Reel’,              author:‘Aidan Montag’,            runtime:‘00:14:00’, desc:‘Three prototype commercials, produced by the virtual production class as exercises in in-camera visual effects, motion capture, and motion control.’ },
+{ day:‘Saturday’, session:‘morning’,   title:‘Royster_TheFinalCampaignTrim_042626 (2)’,    author:‘Justin Royster’,          runtime:‘00:15:00’, desc:‘Oliver, with the help of his Dungeon Master, uses this DND Campaign to tell his longtime friends a long awaited secret.’ },
+{ day:‘Saturday’, session:‘afternoon’, title:‘Capstone Presentation: Painting and Animating Cinemagraphs’, author:‘Miranda Lenaghan’, runtime:‘00:14:00’, desc:‘A look into the process behind animating illustrated landscapes.’ },
+{ day:‘Saturday’, session:‘afternoon’, title:‘Ellie Meyer’,                                author:‘Ellie Meyer’,             runtime:‘00:20:00’, desc:‘Senior screenwriting craft track presentation and proof of concept.’ },
+{ day:‘Saturday’, session:‘afternoon’, title:“Evan Roos’s Craft Track Presentation”,       author:‘Evan Roos’,               runtime:‘00:20:00’ },
+{ day:‘Saturday’, session:‘afternoon’, title:‘Stale Bread’,                                author:‘Jake Smith’,              runtime:‘00:20:00’, desc:‘A priest must decide whether or not he can look past his feelings for his best friend after promising to officiate his wedding.’ },
+{ day:‘Saturday’, session:‘afternoon’, title:‘Hallie Allport’,                             author:‘Hallie Allport’,          runtime:‘00:20:00’, desc:‘Hallie's craft presentation.’ },
+{ day:‘Saturday’, session:‘afternoon’, title:‘Nuns, Girls, and Communist Cancerous Draculas’, author:‘Sara Amadeo’,          runtime:‘00:20:00’, desc:‘Sara Amadeo's Cinematography Craft Track Presentation.’ },
+{ day:‘Saturday’, session:‘afternoon’, title:‘Coleman_2GaysPOC_041826’,                    author:‘Alex Coleman’,            runtime:‘00:18:00’, desc:‘N/A’ },
+{ day:‘Saturday’, session:‘afternoon’, title:‘Eureka_Final_Color_Rec709_w_credits’,        author:‘Lindsey Hecker’,          runtime:‘00:19:00’, desc:‘A girl with anxiety throws a party to impress her long-time crush, but her mental health issues come to the surface when it all goes to crap.’ },
+{ day:‘Saturday’, session:‘afternoon’, title:‘Mabelen Bonifacio’,                          author:‘Mabelen Bonifacio’,       runtime:‘00:20:00’, desc:‘My Editing Craft Track Presentation!’ },
+{ day:‘Saturday’, session:‘afternoon’, title:‘STARHEAD!! The Pilot’,                       author:‘Samara Reid’,             runtime:‘00:14:00’, desc:‘Two amateur space cadets attempt to save their captain from a dastardly villain.’ },
+{ day:‘Saturday’, session:‘afternoon’, title:‘BANANA KING’,                                author:‘Sean Campbell’,           runtime:‘00:11:00’, desc:‘Various primates fight over the staff that once belonged to the powerful Monkey King.’ },
+{ day:‘Saturday’, session:‘afternoon’, title:‘Jack Barry: Cinematography Craft Presentation’, author:‘Jack Barry’,          runtime:‘00:20:00’, desc:‘Jack Barry takes you behind the scenes of the alien planet and energetic dance floor of his two capstone projects.’ },
+{ day:‘Saturday’, session:‘afternoon’, title:‘Noise Within’,                               author:‘Joey Ausanio’,            runtime:‘00:14:00’, desc:‘When an internal cochlear implant malfunctions twenty years after surgery, a Deaf woman is consumed by tinnitus and forced into a high-stakes decision with no clear way back.’ },
+{ day:‘Saturday’, session:‘afternoon’, title:‘Mia Srivastava’,                             author:‘Mia Srivastava’,          runtime:‘00:20:00’, desc:‘Sound craft track presentation focusing on Out of Water, an animation capstone, and A Prom For The Stars, a live action capstone.’ },
+// ── SUNDAY ──
+{ day:‘Sunday’, session:‘morning’,   title:‘Beyond The Grove’,                             author:‘Mandy Fletcher’,          runtime:‘00:19:00’, desc:‘Beyond the Grove is a 2D animated show pitch about a bunny finding herself in a world not built for her.’ },
+{ day:‘Sunday’, session:‘morning’,   title:‘VENTUS RIG - A 3D Rigging Capstone by Eli Papandrea’, author:‘Eli Papandrea’,  runtime:‘00:14:00’, desc:‘VENTUS is a 3D Horse Rig for animating in Maya.’ },
+{ day:‘Sunday’, session:‘morning’,   title:‘K.C. Singleton Craft Track Presentation’,      author:‘Karston Singleton’,       runtime:‘00:20:00’, desc:‘K.C. Singleton Craft Track Presentation.’ },
+{ day:‘Sunday’, session:‘morning’,   title:‘Kailee Gentles Craft Presentation’,            author:‘Kailee Gentles’,          runtime:‘00:20:00’, desc:‘Kailee's Sound Craft Track Presentation.’ },
+{ day:‘Sunday’, session:‘morning’,   title:‘Apple and The World Eater’,                    author:‘Sarah Chen’,              runtime:‘00:14:00’, desc:‘A little girl confronts the cosmic deity that has been eating her world.’ },
+{ day:‘Sunday’, session:‘morning’,   title:‘My Self and Sound’,                            author:‘Jackson Self’,            runtime:‘00:20:00’, desc:‘Jax Self explores his sound journey over the past year.’ },
+{ day:‘Sunday’, session:‘morning’,   title:‘Breaker’,                                      author:‘Jordan Buterbaugh’,       runtime:‘00:20:00’, desc:‘A group of soldiers trapped in an abandoned building fight a light monster.’ },
+{ day:‘Sunday’, session:‘morning’,   title:‘Blair Brown’,                                  author:‘Blair Brown’,             runtime:‘00:20:00’, desc:‘A presentation on my work as a production designer on two capstone films.’ },
+{ day:‘Sunday’, session:‘morning’,   title:‘Kept You Waiting, Huh? - Cine Craft Presentation’, author:‘Deegan Melchiondo’, runtime:‘00:20:00’, desc:‘Cinematography/Color Craft Track Presentation.’ },
+{ day:‘Sunday’, session:‘morning’,   title:‘I Flew Beyond an End’,                         author:‘Indigo Cisneros’,         runtime:‘00:12:00’, desc:‘A cat inside a terrible storm fights to return to a beautiful world.’ },
+{ day:‘Sunday’, session:‘morning’,   title:‘Bear and Ferret’,                              author:‘Emily Purdum’,            runtime:‘00:11:00’, desc:‘Bear struggles to confront his father, Ferret, about his frequent absence.’ },
+{ day:‘Sunday’, session:‘morning’,   title:‘Temple Ruins: A 3D Game Environment Demo’,    author:‘Sangeeta Greenwald’,       runtime:‘00:15:00’, desc:‘A 3D stylized game environment of an abandoned temple in ruins.’ },
+{ day:‘Sunday’, session:‘morning’,   title:‘Alejandro Sanchez-Alonso 2026 Animation DEMO Reel & Craft Track’, author:‘Alejandro Sanchez-Alonso’, runtime:‘00:14:00’, desc:‘My 2026 capstone including my animation demo reel and craft track!’ },
+{ day:‘Sunday’, session:‘morning’,   title:‘Parker Long Visual Effects Craft Presentation’, author:‘Parker Long’,           runtime:‘00:20:00’, desc:‘VFX craft presentation.’ },
+{ day:‘Sunday’, session:‘afternoon’, title:‘Intrepid’,                                     author:‘Ren Norris’,              runtime:‘00:13:00’, desc:‘An obsession with the cosmos leads a girl to the call of the void.’ },
+{ day:‘Sunday’, session:‘afternoon’, title:‘Be Better - Pitch Deck and Proof’,             author:‘Lou Duchin’,              runtime:‘00:20:00’, desc:‘When the alpha-male CEO of an AI company is magically turned into a woman, he must learn to survive in the male-dominated hellscape he's created while searching for a way back with the help of his ex and her occult women's group.’ },
+{ day:‘Sunday’, session:‘afternoon’, title:‘Drive-Out!’,                                   author:‘Troy Tedeschi’,           runtime:‘00:22:00’, desc:‘At a 60's Drive-In Movie Theatre, two teens' date is going poorly, until some unlikely assistance steps in to help.’ },
+{ day:‘Sunday’, session:‘afternoon’, title:‘Reaper’,                                       author:‘Chris Moon’,              runtime:‘00:22:00’, desc:‘Finding herself lost in the underworld, a tightly strung human with a kind heart forges an unlikely bond with a grim reaper, and the two embark on a journey through the nine circles of hell, confronting the demon overlords that rule each realm with an iron fist.’ },
+{ day:‘Sunday’, session:‘afternoon’, title:‘Free Fall’,                                    author:‘Katie Schneider’,         runtime:‘00:14:00’, desc:‘A young woman is uncertain about participating in her community's daily ritual.’ },
+{ day:‘Sunday’, session:‘afternoon’, title:‘Sculpt’,                                       author:‘Jill Smith’,              runtime:‘00:17:00’, desc:‘A clay woman navigates her surreal fleshy home. From room to room, she continuously reshapes herself using her body and the tangible walls to fit through each cavernous door. The house begins to unexpectedly change.’ },
+{ day:‘Sunday’, session:‘afternoon’, title:‘Ananse and The Divine Journey’,                author:‘Bathscheba Duronvil’,      runtime:‘00:18:00’, desc:‘N/A’ },
+{ day:‘Sunday’, session:‘afternoon’, title:‘Cursed With Success’,                          author:‘Maria Palmeri’,           runtime:‘00:22:00’, desc:‘Ruby is takes pride in knowing that every guy she dates becomes successful in some way, but then struggles to be in a real relationship.’ },
+{ day:‘Sunday’, session:‘afternoon’, title:‘Cage Of Ideals’,                               author:‘Ethan Oakes’,             runtime:‘00:18:00’, desc:‘A recluse achieves his lifelong dream of meeting his favorite cartoon character in real life, a dragon named Cotton.’ },
+{ day:‘Sunday’, session:‘afternoon’, title:“AlMutawa_DanceLikeEveryone’sWatching-ProofofConcept-RITVersion_04272026”, author:‘A.G Al Mutawa’, runtime:‘00:25:00’ },
+{ day:‘Sunday’, session:‘afternoon’, title:‘Episode 27’,                                   author:‘Troy Xia’,                runtime:‘00:20:00’, desc:‘Qingtian completes the unfinished chapter of his childhood in the animated world.’ },
+// ── MONDAY ──
+{ day:‘Monday’, session:‘morning’,   title:‘Beast of Friends’,                             author:‘Kyren Hartman’,           runtime:‘00:04:00’, desc:‘Two friends hide from a beast while confronting a different one within their relationship.’ },
+{ day:‘Monday’, session:‘morning’,   title:‘Historia Naturalis’,                           author:‘Stephen Burton’,          runtime:‘00:06:00’, desc:‘A stop motion journey through a medieval bestiary.’ },
+{ day:‘Monday’, session:‘morning’,   title:‘All Bark’,                                     author:‘Luiza Kayamori Arroyo’,   runtime:‘00:03:00’, desc:‘A dog barks. A lot.’ },
+{ day:‘Monday’, session:‘morning’,   title:‘Shell Of Spells’,                              author:‘Antonia Jones’,           runtime:‘00:03:00’, desc:‘A film about a wizard that wants to hatch an egg.’ },
+{ day:‘Monday’, session:‘morning’,   title:‘Long Critterzsz’,                              author:‘Eric Strasser’,           runtime:‘00:03:00’, desc:‘Polecat-esq animals causing minor havoc around a house.’ },
+{ day:‘Monday’, session:‘morning’,   title:‘Flaherty_TheFreeWormDilemma_04,22,26’,         author:‘Nate Flaherty’,           runtime:‘00:05:00’, desc:‘An underwater argument between a fish and a crab.’ },
+{ day:‘Monday’, session:‘morning’,   title:‘Browne_FittingIn_04272026’,                    author:‘Ryann Browne’,            runtime:‘00:05:00’, desc:‘An alien attempts to blend in with an individual and their dog.’ },
+{ day:‘Monday’, session:‘morning’,   title:‘Chasing the Dragon’,                           author:‘Parker Fuller’,           runtime:‘00:16:00’, desc:‘Video presentation of a semester-long pitch project.’ },
+{ day:‘Monday’, session:‘morning’,   title:‘Nadja’,                                        author:‘Evan Sukhenko’,           runtime:‘00:13:00’, desc:‘Nadja is a biographical Documentary about the challenging life of Nadja Sukhenko.’ },
+{ day:‘Monday’, session:‘morning’,   title:‘Curtin_Ten Feet Away_Showing’,                 author:‘Nicole Curtin’,           runtime:‘00:09:00’, desc:‘Local Larping Esc Group.’ },
+{ day:‘Monday’, session:‘morning’,   title:‘Nathan Armstrong’,                             author:‘Nathan Armstrong’,        runtime:‘00:20:00’, desc:‘Dp work of my two Capstones.’ },
+{ day:‘Monday’, session:‘morning’,   title:“Darcy’s Big Day”,                              author:‘April Thomas’,            runtime:‘00:09:00’ },
+{ day:‘Monday’, session:‘morning’,   title:‘Standing on Business’,                         author:‘Siti Rosbrook’,           runtime:‘00:07:00’, desc:‘An obsessive fan hires a priest to bless the cardboard standee she claims to be haunted.’ },
+{ day:‘Monday’, session:‘morning’,   title:‘Yaoi on Ice’,                                  author:‘Riley Douglass’,          runtime:‘00:05:00’, desc:‘Two figure skaters grow closer over a shared interest.’ },
+{ day:‘Monday’, session:‘morning’,   title:‘Star Crossed’,                                 author:‘Leslie Purcell’,          runtime:‘00:04:00’, desc:‘Two people bump into each other on the street causing a cosmic explosion of emotions.’ },
+{ day:‘Monday’, session:‘morning’,   title:‘Watts_HumanNature_042626’,                     author:‘Audrey Watts’,            runtime:‘00:05:00’, desc:‘N/A’ },
+{ day:‘Monday’, session:‘morning’,   title:‘GramGPT_Bell_Richie’,                          author:‘Richie Bell’,             runtime:‘00:05:00’, desc:‘N/A’ },
+{ day:‘Monday’, session:‘morning’,   title:‘Health Potions’,                               author:‘Sampson Matteson’,        runtime:‘00:05:00’, desc:‘Two adventurers attempt to swindle a potion seller.’ },
+{ day:‘Monday’, session:‘morning’,   title:‘Matthew Tallarico’,                            author:‘Matthew Tallarico’,       runtime:‘00:15:00’, desc:‘MPS Shootout.’ },
+{ day:‘Monday’, session:‘morning’,   title:‘Luke Chrzan’,                                  author:‘Luke Chrzan’,             runtime:‘00:15:00’, desc:‘MPS2 Shootout: Canon C300 Mk3 vs Sony FS7 Mk2.’ },
+{ day:‘Monday’, session:‘morning’,   title:‘Bread of the Dead’,                            author:‘Arely Garcia Leon’,       runtime:‘00:05:00’, desc:‘On the Day of the Dead, Suzie remembers her brother by baking and offering sweet bread at his ofrenda.’ },
+{ day:‘Monday’, session:‘morning’,   title:‘Choosing To Be’,                               author:‘Nicky Champlin’,          runtime:‘00:06:00’, desc:‘An old house protects a young stranger as they discover themself.’ },
+{ day:‘Monday’, session:‘morning’,   title:“Kyle Chong’s Cinematography Craft Track Presentation”, author:‘Kyle Chong’,   runtime:‘00:19:00’ },
+{ day:‘Monday’, session:‘afternoon’, title:‘Cletus the Cat: A 3D Rigging Demo’,            author:‘Maggie Slaughter’,        runtime:‘00:16:00’, desc:‘A presentation on the creation process of Cletus the Cat: a 3D rigged character.’ },
+{ day:‘Monday’, session:‘afternoon’, title:‘Cobwebs’,                                      author:‘Sarah A. McMaster’,       runtime:‘00:09:00’, desc:‘Not everything is as terrible as it seems.’ },
+{ day:‘Monday’, session:‘afternoon’, title:‘Kresco_Mikayla_Capstone_042726’,               author:‘Mikayla Kresco’,          runtime:‘00:20:00’, desc:‘Character Animation Demo Reel.’ },
+{ day:‘Monday’, session:‘afternoon’, title:‘A Safe Space’,                                 author:‘Gonzalo Via y Rada’,      runtime:‘00:17:00’, desc:‘SAFE SPACE is a documentary about amateurs and professional boxers, from different places around the world, with different cultures, who shared they journey in one space, a small gym at Buffalo, NY.’ },
+{ day:‘Monday’, session:‘afternoon’, title:‘Moloch’,                                       author:‘Eva Kadagishvili’,        runtime:‘00:05:00’, desc:‘A girl is told to go into the woods and finds a cult.’ },
+{ day:‘Monday’, session:‘afternoon’, title:‘KimiaEdrissi-Giraffina-Tier1-Final02_1’,       author:‘Kimia Edrissi’,           runtime:‘00:02:00’, desc:‘N/A’ },
+{ day:‘Monday’, session:‘afternoon’, title:‘Tubborn’,                                      author:‘Asia Isolano’,            runtime:‘00:05:00’, desc:‘A pet creature faces the challenges of avoiding its monthly bath day.’ },
+{ day:‘Monday’, session:‘afternoon’, title:‘TheWitch’,                                     author:‘Kaija Hjelm’,             runtime:‘00:11:00’, desc:‘A young girl seeks out a mysterious witch who has taken up residence in the forest in order to save her friend.’ },
+{ day:‘Monday’, session:‘afternoon’, title:‘Till All Have Heard’,                          author:‘Trinitee Stokes’,         runtime:‘00:11:00’, desc:‘In silent pews, Deaf hearts are left out—because the message of Jesus Christ isn't spoken in their language.’ },
+{ day:‘Monday’, session:‘afternoon’, title:“The Shattered Perception of My Body’s Resilience”, author:‘Riley Bodell’,      runtime:‘00:08:00’ },
+{ day:‘Monday’, session:‘afternoon’, title:‘where we are now’,                             author:‘Victoria Pendzick’,       runtime:‘00:08:00’, desc:‘An exploration of our past, and how it shapes our present.’ },
+{ day:‘Monday’, session:‘afternoon’, title:‘The Girl, The Hare, and The Sun’,              author:‘Ali Guzman’,              runtime:‘00:12:00’, desc:‘Luna is thrown into the unknown when a mysterious train shows up at night, leading her to a magical circus.’ },
+{ day:‘Monday’, session:‘afternoon’, title:‘All in the Cards’,                             author:‘Ryan Clouse’,             runtime:‘00:17:00’, desc:‘After his dream trading card is stolen by a shady scalper, Mickey must team up with his game night buddies to get it back.’ },
+{ day:‘Monday’, session:‘afternoon’, title:‘Legacy’,                                       author:‘Theodore Lucas’,          runtime:‘00:03:00’, desc:‘A street racing couple's plan to leave the underground car world gets thwarted, leaving them with no other choice but to race one last time for their freedom.’ },
+{ day:‘Monday’, session:‘afternoon’, title:‘Sticky Hand Standoff’,                         author:‘Adelyne Atwell’,          runtime:‘00:12:00’, desc:‘When Johnny's favorite toys get stolen out of his lunchbox, he must go on a journey to retrieve them.’ },
+{ day:‘Monday’, session:‘afternoon’, title:‘VANITY’,                                       author:‘Maddi Johnson’,           runtime:‘00:12:00’, desc:‘Nepo baby actress, Willow Fox, takes on a role as a serial killer in a hot new thriller, but struggles to become her character.’ },
+{ day:‘Monday’, session:‘afternoon’, title:‘StarlightStarbright_fixedcaptions’,            author:‘Alyessa Bolander’,        runtime:‘00:06:00’, desc:‘A rough crew of pirates finds a unique treasure.’ },
+{ day:‘Monday’, session:‘afternoon’, title:‘SuperAssassin69’,                              author:‘Lucas Elliott’,           runtime:‘00:08:00’, desc:‘An assassin tries to kill a guy.’ },
+{ day:‘Monday’, session:‘afternoon’, title:‘The Bike’,                                     author:‘Clara LaChance’,          runtime:‘00:07:00’, desc:‘A rusty old bike wanders the city looking for a companion.’ },
+{ day:‘Monday’, session:‘afternoon’, title:‘Ethan Spillane Editing Craft Presentation’,    author:‘Ethan Spillane’,          runtime:‘00:20:00’, desc:‘Ethan Spillane's editing craft presentation.’ },
+{ day:‘Monday’, session:‘afternoon’, title:‘declan h’,                                     author:‘Declan Hughes’,           runtime:‘00:20:00’, desc:‘p2 class reel.’ },
 ];
 
 // State
 let checks = {};
-let activeDay = 'All';
-let searchQuery = '';
+let activeDay = ‘All’;
+let searchQuery = ‘’;
 let activeReviewer = null;
-let activeState = 'all';
+let activeState = ‘all’;
 let showDescriptions = false;
 
 function storageKey(filmIdx, reviewerIdx) {
-  return `ss26_${filmIdx}_${reviewerIdx}`;
+return `ss26_${filmIdx}_${reviewerIdx}`;
 }
 
 function loadChecks() {
-  // Seed from localStorage immediately for instant display
-  checks = {};
-  FILMS.forEach((_, fi) => {
-    REVIEWERS.forEach((_, ri) => {
-      const k = storageKey(fi, ri);
-      const v = parseInt(localStorage.getItem(k) || '0', 10);
-      checks[k] = isNaN(v) ? 0 : v;
-    });
-  });
+// Seed from localStorage immediately for instant display
+checks = {};
+FILMS.forEach((*, fi) => {
+REVIEWERS.forEach((*, ri) => {
+const k = storageKey(fi, ri);
+const v = parseInt(localStorage.getItem(k) || ‘0’, 10);
+checks[k] = isNaN(v) ? 0 : v;
+});
+});
 }
 
 function setSyncStatus(state) {
-  const el = document.getElementById('sync-status');
-  if (!el) return;
-  if (state === 'connected')  { el.textContent = '🟢 synced';        el.style.color = '#4ade80'; }
-  else if (state === 'error') { el.textContent = '🔴 sync error';     el.style.color = '#f87171'; }
-  else                        { el.textContent = '⏳ connecting…';    el.style.color = '#7a8099'; }
+const el = document.getElementById(‘sync-status’);
+if (!el) return;
+if (state === ‘connected’)  { el.textContent = ‘🟢 synced’;        el.style.color = ‘#4ade80’; }
+else if (state === ‘error’) { el.textContent = ‘🔴 sync error’;     el.style.color = ‘#f87171’; }
+else                        { el.textContent = ‘⏳ connecting…’;    el.style.color = ‘#7a8099’; }
 }
 
 function startFirebaseSync() {
-  window._fbListen(data => {
-    setSyncStatus('connected');
-    // Restore scroll once on first sync
-    if (!window._scrollRestored) {
-      window._scrollRestored = true;
-      const savedScroll = parseInt(localStorage.getItem('pref_scroll') || '0', 10);
-      if (savedScroll > 0) {
-        setTimeout(() => {
-        window.scrollTo({ top: savedScroll, behavior: 'instant' });
-        updateDayIndicator();
-      }, 50);
-      }
-    }
-    // Merge incoming data into checks
-    FILMS.forEach((_, fi) => {
-      REVIEWERS.forEach((_, ri) => {
-        const k = storageKey(fi, ri);
-        const v = parseInt((data[k] !== undefined ? data[k] : 0), 10);
-        checks[k] = isNaN(v) ? 0 : v;
-        // Update DOM to match
-        const wrap = document.querySelector(`[data-fi="${fi}"][data-ri="${ri}"]`);
-        if (wrap) {
-          const box = wrap.querySelector('.check-box');
-          box.classList.remove('state-1', 'state-2', 'state-3');
-          if (checks[k] > 0) box.classList.add('state-' + checks[k]);
-          wrap.querySelector('.dash-icon').style.display  = checks[k] === 1 ? 'block' : 'none';
-          wrap.querySelector('.check-icon').style.display = checks[k] === 2 ? 'block' : 'none';
-          wrap.querySelector('.x-icon').style.display     = checks[k] === 3 ? 'block' : 'none';
-        }
-      });
-    });
-    updateStats();
-  });
+window._fbListen(data => {
+setSyncStatus(‘connected’);
+// Restore scroll once on first sync
+if (!window.*scrollRestored) {
+window.*scrollRestored = true;
+const savedScroll = parseInt(localStorage.getItem(‘pref_scroll’) || ‘0’, 10);
+if (savedScroll > 0) {
+setTimeout(() => {
+window.scrollTo({ top: savedScroll, behavior: ‘instant’ });
+updateDayIndicator();
+}, 50);
+}
+}
+// Merge incoming data into checks
+FILMS.forEach((*, fi) => {
+REVIEWERS.forEach((*, ri) => {
+const k = storageKey(fi, ri);
+const v = parseInt((data[k] !== undefined ? data[k] : 0), 10);
+checks[k] = isNaN(v) ? 0 : v;
+// Update DOM to match
+const wrap = document.querySelector(`[data-fi="${fi}"][data-ri="${ri}"]`);
+if (wrap) {
+const box = wrap.querySelector(’.check-box’);
+box.classList.remove(‘state-1’, ‘state-2’, ‘state-3’);
+if (checks[k] > 0) box.classList.add(‘state-’ + checks[k]);
+wrap.querySelector(’.dash-icon’).style.display  = checks[k] === 1 ? ‘block’ : ‘none’;
+wrap.querySelector(’.check-icon’).style.display = checks[k] === 2 ? ‘block’ : ‘none’;
+wrap.querySelector(’.x-icon’).style.display     = checks[k] === 3 ? ‘block’ : ‘none’;
+}
+});
+});
+updateStats();
+});
 }
 
 function saveCheck(filmIdx, reviewerIdx, val) {
-  const k = storageKey(filmIdx, reviewerIdx);
-  checks[k] = val;
-  localStorage.setItem(k, String(val));   // instant local cache
-  if (window._fbReady) {
-    window._fbSet(k, val).catch(err => {
-      console.error('Firebase write error:', err);
-      setSyncStatus('error');
-    });
-  }
+const k = storageKey(filmIdx, reviewerIdx);
+checks[k] = val;
+localStorage.setItem(k, String(val));   // instant local cache
+if (window._fbReady) {
+window._fbSet(k, val).catch(err => {
+console.error(‘Firebase write error:’, err);
+setSyncStatus(‘error’);
+});
+}
 }
 
 function toggle(filmIdx, reviewerIdx) {
-  const cur = checks[storageKey(filmIdx, reviewerIdx)] || 0;
-  const newVal = (cur + 1) % 4;
-  saveCheck(filmIdx, reviewerIdx, newVal);
-  const wrap = document.querySelector(`[data-fi="${filmIdx}"][data-ri="${reviewerIdx}"]`);
-  if (wrap) {
-    const box = wrap.querySelector('.check-box');
-    box.classList.remove('state-1', 'state-2', 'state-3');
-    if (newVal > 0) box.classList.add('state-' + newVal);
-    wrap.querySelector('.dash-icon').style.display  = newVal === 1 ? 'block' : 'none';
-    wrap.querySelector('.check-icon').style.display = newVal === 2 ? 'block' : 'none';
-    wrap.querySelector('.x-icon').style.display     = newVal === 3 ? 'block' : 'none';
-  }
-  updateStats();
+const cur = checks[storageKey(filmIdx, reviewerIdx)] || 0;
+const newVal = (cur + 1) % 4;
+saveCheck(filmIdx, reviewerIdx, newVal);
+const wrap = document.querySelector(`[data-fi="${filmIdx}"][data-ri="${reviewerIdx}"]`);
+if (wrap) {
+const box = wrap.querySelector(’.check-box’);
+box.classList.remove(‘state-1’, ‘state-2’, ‘state-3’);
+if (newVal > 0) box.classList.add(‘state-’ + newVal);
+wrap.querySelector(’.dash-icon’).style.display  = newVal === 1 ? ‘block’ : ‘none’;
+wrap.querySelector(’.check-icon’).style.display = newVal === 2 ? ‘block’ : ‘none’;
+wrap.querySelector(’.x-icon’).style.display     = newVal === 3 ? ‘block’ : ‘none’;
+}
+updateStats();
 }
 
 function buildTable() {
-  const tbody = document.getElementById('table-body');
-  let currentDay = null;
-  let html = '';
+const tbody = document.getElementById(‘table-body’);
+let currentDay = null;
+let html = ‘’;
 
-  FILMS.forEach((film, fi) => {
-    if (film.day !== currentDay) {
-      currentDay = film.day;
-      const dayColors = {Thursday:'#3b82f6',Friday:'#ec4899',Saturday:'#f97316',Sunday:'#a78bfa',Monday:'#34d399'};
-      const dc = dayColors[film.day] || '#ffffff';
-      html += `<tr class="day-row" data-day="${film.day}">
-        <td colspan="9" style="padding:20px 20px 16px;font-family:'DM Serif Display',serif;font-size:26px;color:#ffffff;background:#1a1f2e;border-top:4px solid ${dc};border-bottom:2px solid #2a2f3e;position:relative;line-height:1.2;">
-          <span style="border-left:4px solid ${dc};padding-left:14px;color:#ffffff;display:inline-block;">${film.day}</span>
-        </td>
-      </tr>`;
-    }
+FILMS.forEach((film, fi) => {
+if (film.day !== currentDay) {
+currentDay = film.day;
+const dayColors = {Thursday:’#3b82f6’,Friday:’#ec4899’,Saturday:’#f97316’,Sunday:’#a78bfa’,Monday:’#34d399’};
+const dc = dayColors[film.day] || ‘#ffffff’;
+html += `<tr class="day-row" data-day="${film.day}"> <td colspan="9" style="padding:20px 20px 16px;font-family:'DM Serif Display',serif;font-size:26px;color:#ffffff;background:#1a1f2e;border-top:4px solid ${dc};border-bottom:2px solid #2a2f3e;position:relative;line-height:1.2;"> <span style="border-left:4px solid ${dc};padding-left:14px;color:#ffffff;display:inline-block;">${film.day}</span> </td> </tr>`;
+}
 
-    const sessionClass = film.session === 'morning' ? 'session-morning' : 'session-afternoon';
-    const sessionLabel = film.session === 'morning' ? '☀ Morning' : '🌙 Afternoon';
+```
+const sessionClass = film.session === 'morning' ? 'session-morning' : 'session-afternoon';
+const sessionLabel = film.session === 'morning' ? '☀ Morning' : '🌙 Afternoon';
 
-    let checkCells = '';
-    REVIEWERS.forEach((r, ri) => {
-      const isChecked = checks[storageKey(fi, ri)];
-      const state = checks[storageKey(fi, ri)] || 0;
-      const stateClass = state === 1 ? ' state-1' : state === 2 ? ' state-2' : state === 3 ? ' state-3' : '';
-      checkCells += `
-        <td class="check-cell" data-ri-col="${ri}">
-          <div class="check-wrap" data-fi="${fi}" data-ri="${ri}" onclick="toggle(${fi},${ri})">
-            <div class="check-box${stateClass}">
-              <svg class="icon dash-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" style="display:${state===1?'block':'none'}">
-                <path d="M2.5 6h7" stroke="#000" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-              <svg class="icon check-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" style="display:${state===2?'block':'none'}">
-                <path d="M2 6l3 3 5-5" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              <svg class="icon x-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" style="display:${state===3?'block':'none'}">
-                <path d="M2.5 2.5l7 7M9.5 2.5l-7 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
-              </svg>
-            </div>
-          </div>
-        </td>`;
-    });
+let checkCells = '';
+REVIEWERS.forEach((r, ri) => {
+  const isChecked = checks[storageKey(fi, ri)];
+  const state = checks[storageKey(fi, ri)] || 0;
+  const stateClass = state === 1 ? ' state-1' : state === 2 ? ' state-2' : state === 3 ? ' state-3' : '';
+  checkCells += `
+    <td class="check-cell" data-ri-col="${ri}">
+      <div class="check-wrap" data-fi="${fi}" data-ri="${ri}" onclick="toggle(${fi},${ri})">
+        <div class="check-box${stateClass}">
+          <svg class="icon dash-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" style="display:${state===1?'block':'none'}">
+            <path d="M2.5 6h7" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <svg class="icon check-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" style="display:${state===2?'block':'none'}">
+            <path d="M2 6l3 3 5-5" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <svg class="icon x-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" style="display:${state===3?'block':'none'}">
+            <path d="M2.5 2.5l7 7M9.5 2.5l-7 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+    </td>`;
+});
 
-    const descText = film.desc || '';
-    html += `<tr class="film-row" data-day="${film.day}" data-search="${film.title.toLowerCase()} ${film.author.toLowerCase()}" data-fi="${fi}">
-      <td><span class="session-badge ${sessionClass}">${sessionLabel}</span><span class="film-name">${escHtml(film.title)}</span></td>
-      <td><span class="author-name">${escHtml(film.author)}</span></td>
-      <td><span class="runtime">${film.runtime}</span></td>
-      ${checkCells}
-    </tr>
-    <tr class="desc-row hidden" data-day="${film.day}" data-fi="${fi}">
-      <td colspan="9"><span>${escHtml(descText)}</span></td>
-    </tr>`;
-  });
+const descText = film.desc || '';
+html += `<tr class="film-row" data-day="${film.day}" data-search="${film.title.toLowerCase()} ${film.author.toLowerCase()}" data-fi="${fi}">
+  <td><span class="session-badge ${sessionClass}">${sessionLabel}</span><span class="film-name">${escHtml(film.title)}</span></td>
+  <td><span class="author-name">${escHtml(film.author)}</span></td>
+  <td><span class="runtime">${film.runtime}</span></td>
+  ${checkCells}
+</tr>
+<tr class="desc-row hidden" data-day="${film.day}" data-fi="${fi}">
+  <td colspan="9"><span>${escHtml(descText)}</span></td>
+</tr>`;
+```
 
-  tbody.innerHTML = html;
+});
+
+tbody.innerHTML = html;
 }
 
 function escHtml(s) {
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+return s.replace(/&/g,’&’).replace(/</g,’<’).replace(/>/g,’>’).replace(/”/g,’"’);
 }
 
-
 function filterByState() {
-  document.querySelectorAll('tr.film-row:not(.hidden)').forEach(row => {
-    if (activeState === 'all') { row.classList.remove('hidden'); return; }
-    const fi = parseInt(row.dataset.fi);
-    const stateNum = parseInt(activeState);
-    let match = false;
-    if (activeReviewer === null) {
-      if (stateNum === 0) {
-        // Unreviewed: ALL reviewers must be blank
-        match = REVIEWERS.every((_, ri) => (checks[storageKey(fi, ri)] || 0) === 0);
-      } else {
-        // Any reviewer has this state
-        match = REVIEWERS.some((_, ri) => (checks[storageKey(fi, ri)] || 0) === stateNum);
-      }
-    } else {
-      match = (checks[storageKey(fi, activeReviewer)] || 0) === stateNum;
-    }
-    row.classList.toggle('hidden', !match);
-  });
-  // sync desc rows visibility with their film row
-  syncDescRows();
+document.querySelectorAll(‘tr.film-row:not(.hidden)’).forEach(row => {
+if (activeState === ‘all’) { row.classList.remove(‘hidden’); return; }
+const fi = parseInt(row.dataset.fi);
+const stateNum = parseInt(activeState);
+let match = false;
+if (activeReviewer === null) {
+if (stateNum === 0) {
+// Unreviewed: ALL reviewers must be blank
+match = REVIEWERS.every((*, ri) => (checks[storageKey(fi, ri)] || 0) === 0);
+} else {
+// Any reviewer has this state
+match = REVIEWERS.some((*, ri) => (checks[storageKey(fi, ri)] || 0) === stateNum);
+}
+} else {
+match = (checks[storageKey(fi, activeReviewer)] || 0) === stateNum;
+}
+row.classList.toggle(‘hidden’, !match);
+});
+// sync desc rows visibility with their film row
+syncDescRows();
 }
 
 function syncDescRows() {
-  document.querySelectorAll('tr.desc-row').forEach(dr => {
-    const fi = dr.dataset.fi;
-    const filmRow = document.querySelector(`tr.film-row[data-fi="${fi}"]`);
-    const hidden = !filmRow || filmRow.classList.contains('hidden');
-    dr.classList.toggle('hidden', hidden || !showDescriptions);
-  });
-  // hide day headers if no visible films
-  const visibleDays = new Set();
-  document.querySelectorAll('tr.film-row:not(.hidden)').forEach(r => visibleDays.add(r.dataset.day));
-  document.querySelectorAll('tr.day-row').forEach(r => {
-    r.classList.toggle('hidden', !visibleDays.has(r.dataset.day));
-  });
-  const noResults = document.getElementById('no-results');
-  if (noResults) noResults.classList.toggle('visible', visibleDays.size === 0);
+document.querySelectorAll(‘tr.desc-row’).forEach(dr => {
+const fi = dr.dataset.fi;
+const filmRow = document.querySelector(`tr.film-row[data-fi="${fi}"]`);
+const hidden = !filmRow || filmRow.classList.contains(‘hidden’);
+dr.classList.toggle(‘hidden’, hidden || !showDescriptions);
+});
+// hide day headers if no visible films
+const visibleDays = new Set();
+document.querySelectorAll(‘tr.film-row:not(.hidden)’).forEach(r => visibleDays.add(r.dataset.day));
+document.querySelectorAll(‘tr.day-row’).forEach(r => {
+r.classList.toggle(‘hidden’, !visibleDays.has(r.dataset.day));
+});
+const noResults = document.getElementById(‘no-results’);
+if (noResults) noResults.classList.toggle(‘visible’, visibleDays.size === 0);
 }
 
 function toggleDescriptions() {
-  showDescriptions = !showDescriptions;
-  localStorage.setItem('pref_desc', showDescriptions ? '1' : '0');
-  const btn = document.getElementById('desc-toggle-btn');
-  btn.classList.toggle('active', showDescriptions);
-  btn.textContent = showDescriptions ? '📋 Hide Descriptions' : '📋 Show Descriptions';
-  syncDescRows();
+showDescriptions = !showDescriptions;
+localStorage.setItem(‘pref_desc’, showDescriptions ? ‘1’ : ‘0’);
+const btn = document.getElementById(‘desc-toggle-btn’);
+btn.classList.toggle(‘active’, showDescriptions);
+btn.textContent = showDescriptions ? ‘📋 Hide Descriptions’ : ‘📋 Show Descriptions’;
+syncDescRows();
 }
 
 function filterRows() {
-  const rows = document.querySelectorAll('tr.film-row, tr.day-row');
-  const dayRows = document.querySelectorAll('tr.day-row');
-  const query = searchQuery.trim().toLowerCase();
+const rows = document.querySelectorAll(‘tr.film-row, tr.day-row’);
+const dayRows = document.querySelectorAll(‘tr.day-row’);
+const query = searchQuery.trim().toLowerCase();
 
-  // Track which days have visible films
-  const visibleDays = new Set();
+// Track which days have visible films
+const visibleDays = new Set();
 
-  document.querySelectorAll('tr.film-row').forEach(row => {
-    const rowDay = row.dataset.day;
-    const rowSearch = row.dataset.search;
-    const dayMatch = activeDay === 'All' || rowDay === activeDay;
-    const searchMatch = !query || rowSearch.includes(query);
-    const visible = dayMatch && searchMatch;
-    row.classList.toggle('hidden', !visible);
-    if (visible) visibleDays.add(rowDay);
-  });
+document.querySelectorAll(‘tr.film-row’).forEach(row => {
+const rowDay = row.dataset.day;
+const rowSearch = row.dataset.search;
+const dayMatch = activeDay === ‘All’ || rowDay === activeDay;
+const searchMatch = !query || rowSearch.includes(query);
+const visible = dayMatch && searchMatch;
+row.classList.toggle(‘hidden’, !visible);
+if (visible) visibleDays.add(rowDay);
+});
 
-  // Hide day headers with no visible films
-  dayRows.forEach(row => {
-    const rowDay = row.dataset.day;
-    row.classList.toggle('hidden', !visibleDays.has(rowDay));
-  });
+// Hide day headers with no visible films
+dayRows.forEach(row => {
+const rowDay = row.dataset.day;
+row.classList.toggle(‘hidden’, !visibleDays.has(rowDay));
+});
 
-  const noResults = document.getElementById('no-results');
-  noResults.classList.toggle('visible', visibleDays.size === 0);
-  if (activeState !== 'all') filterByState();
-  syncDescRows();
+const noResults = document.getElementById(‘no-results’);
+noResults.classList.toggle(‘visible’, visibleDays.size === 0);
+if (activeState !== ‘all’) filterByState();
+syncDescRows();
 }
 
 function filterReviewerCols() {
-  const allCols = document.querySelectorAll('[data-ri-col]');
-  allCols.forEach(el => {
-    if (activeReviewer === null) {
-      el.style.display = '';
-    } else {
-      el.style.display = (el.dataset.riCol === String(activeReviewer)) ? '' : 'none';
-    }
-  });
-  updateProgress();
+const allCols = document.querySelectorAll(’[data-ri-col]’);
+allCols.forEach(el => {
+if (activeReviewer === null) {
+el.style.display = ‘’;
+} else {
+el.style.display = (el.dataset.riCol === String(activeReviewer)) ? ‘’ : ‘none’;
+}
+});
+updateProgress();
 }
 
 function updateStats() {
-  let total = 0;
-  FILMS.forEach((_, fi) => {
-    REVIEWERS.forEach((r, ri) => {
-      if (checks[storageKey(fi, ri)] > 0) total++;
-    });
-  });
-  document.getElementById('total-films').textContent = FILMS.length;
-  updateProgress();
+let total = 0;
+FILMS.forEach((_, fi) => {
+REVIEWERS.forEach((r, ri) => {
+if (checks[storageKey(fi, ri)] > 0) total++;
+});
+});
+document.getElementById(‘total-films’).textContent = FILMS.length;
+updateProgress();
 }
 
 function updateProgress() {
-  const row = document.getElementById('progress-row');
-  const allActive = activeReviewer === null;
-  let html = `<button class="rev-filter-btn${allActive ? ' rev-active' : ''}" data-ri="all"
-    style="--rc:#aaa" onclick="activeReviewer=null;localStorage.setItem('pref_reviewer','all');filterReviewerCols();">All</button>`;
-  html += REVIEWERS.map((r, ri) => {
-    let count = 0;
-    FILMS.forEach((_, fi) => { if (checks[storageKey(fi, ri)] > 0) count++; });
-    const pct = Math.round((count / FILMS.length) * 100);
-    const isActive = activeReviewer === ri;
-    return `<button class="rev-filter-btn${isActive ? ' rev-active' : ''}" data-ri="${ri}"
-      style="--rc:${r.color}" onclick="activeReviewer=${ri};localStorage.setItem('pref_reviewer',String(${ri}));filterReviewerCols();">
-      <div class="rp-btn-inner">
-        <div class="rp-dot" style="background:${r.color}"></div>
-        <span>${r.name}</span>
-        <span class="rp-count">${count}/${FILMS.length}</span>
-      </div>
-      <div class="rp-bar-bg"><div class="rp-bar-fill" style="width:${pct}%;background:${r.color}"></div></div>
-    </button>`;
-  }).join('');
-  row.innerHTML = html;
+const row = document.getElementById(‘progress-row’);
+const allActive = activeReviewer === null;
+let html = `<button class="rev-filter-btn${allActive ? ' rev-active' : ''}" data-ri="all" style="--rc:#aaa" onclick="activeReviewer=null;localStorage.setItem('pref_reviewer','all');filterReviewerCols();">All</button>`;
+html += REVIEWERS.map((r, ri) => {
+let count = 0;
+FILMS.forEach((_, fi) => { if (checks[storageKey(fi, ri)] > 0) count++; });
+const pct = Math.round((count / FILMS.length) * 100);
+const isActive = activeReviewer === ri;
+return `<button class="rev-filter-btn${isActive ? ' rev-active' : ''}" data-ri="${ri}" style="--rc:${r.color}" onclick="activeReviewer=${ri};localStorage.setItem('pref_reviewer',String(${ri}));filterReviewerCols();"> <div class="rp-btn-inner"> <div class="rp-dot" style="background:${r.color}"></div> <span>${r.name}</span> <span class="rp-count">${count}/${FILMS.length}</span> </div> <div class="rp-bar-bg"><div class="rp-bar-fill" style="width:${pct}%;background:${r.color}"></div></div> </button>`;
+}).join(’’);
+row.innerHTML = html;
 }
 
 // Day filter buttons
-document.querySelectorAll('.day-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    activeDay = btn.dataset.day;
-    localStorage.setItem('pref_day', activeDay);
-    filterRows();
-  });
+document.querySelectorAll(’.day-btn’).forEach(btn => {
+btn.addEventListener(‘click’, () => {
+document.querySelectorAll(’.day-btn’).forEach(b => b.classList.remove(‘active’));
+btn.classList.add(‘active’);
+activeDay = btn.dataset.day;
+localStorage.setItem(‘pref_day’, activeDay);
+filterRows();
+});
 });
 
 // State filter buttons
-document.querySelectorAll('#state-filters .state-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('#state-filters .state-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    activeState = btn.dataset.state;
-    localStorage.setItem('pref_state', activeState);
-    filterRows();
-  });
+document.querySelectorAll(’#state-filters .state-btn’).forEach(btn => {
+btn.addEventListener(‘click’, () => {
+document.querySelectorAll(’#state-filters .state-btn’).forEach(b => b.classList.remove(‘active’));
+btn.classList.add(‘active’);
+activeState = btn.dataset.state;
+localStorage.setItem(‘pref_state’, activeState);
+filterRows();
+});
 });
 
 // Description toggle
-document.getElementById('desc-toggle-btn').addEventListener('click', toggleDescriptions);
+document.getElementById(‘desc-toggle-btn’).addEventListener(‘click’, toggleDescriptions);
 
 // Search
-document.getElementById('search-input').addEventListener('input', e => {
-  searchQuery = e.target.value;
-  filterRows();
+document.getElementById(‘search-input’).addEventListener(‘input’, e => {
+searchQuery = e.target.value;
+filterRows();
 });
 
 // Clear all
-document.getElementById('clear-btn').addEventListener('click', () => {
-  if (!confirm('Clear all checkmarks? This cannot be undone.')) return;
-  FILMS.forEach((_, fi) => {
-    REVIEWERS.forEach((r, ri) => {
-      saveCheck(fi, ri, 0);
-      const wrap = document.querySelector(`[data-fi="${fi}"][data-ri="${ri}"]`);
-      if (wrap) {
-        const box = wrap.querySelector('.check-box');
-        box.classList.remove('state-1', 'state-2');
-        wrap.querySelector('.dash-icon').style.display  = 'none';
-        wrap.querySelector('.check-icon').style.display = 'none';
-        wrap.querySelector('.x-icon').style.display     = 'none';
-      }
-    });
-  });
-  updateStats();
+document.getElementById(‘clear-btn’).addEventListener(‘click’, () => {
+if (!confirm(‘Clear all checkmarks? This cannot be undone.’)) return;
+FILMS.forEach((_, fi) => {
+REVIEWERS.forEach((r, ri) => {
+saveCheck(fi, ri, 0);
+const wrap = document.querySelector(`[data-fi="${fi}"][data-ri="${ri}"]`);
+if (wrap) {
+const box = wrap.querySelector(’.check-box’);
+box.classList.remove(‘state-1’, ‘state-2’);
+wrap.querySelector(’.dash-icon’).style.display  = ‘none’;
+wrap.querySelector(’.check-icon’).style.display = ‘none’;
+wrap.querySelector(’.x-icon’).style.display     = ‘none’;
+}
+});
+});
+updateStats();
 });
 
 // ── Reviewer names toggle ─────────────────────────────────────────────────────
-let showReviewerNames = localStorage.getItem('pref_reviewer_names') !== '0';
+let showReviewerNames = localStorage.getItem(‘pref_reviewer_names’) !== ‘0’;
 
 function applyReviewerNames() {
-  const btn = document.getElementById('reviewers-toggle-btn');
-  const bar = document.getElementById('progress-row');
-  if (bar) bar.style.display = showReviewerNames ? '' : 'none';
-  if (btn) {
-    btn.textContent = showReviewerNames ? 'Hide Reviewer Names' : 'Show Reviewer Names';
-    btn.classList.toggle('active', !showReviewerNames);
-  }
+const btn = document.getElementById(‘reviewers-toggle-btn’);
+const bar = document.getElementById(‘progress-row’);
+if (bar) bar.style.display = showReviewerNames ? ‘’ : ‘none’;
+if (btn) {
+btn.textContent = showReviewerNames ? ‘Hide Reviewer Names’ : ‘Show Reviewer Names’;
+btn.classList.toggle(‘active’, !showReviewerNames);
+}
 }
 
-document.getElementById('reviewers-toggle-btn').addEventListener('click', () => {
-  showReviewerNames = !showReviewerNames;
-  localStorage.setItem('pref_reviewer_names', showReviewerNames ? '1' : '0');
-  applyReviewerNames();
+document.getElementById(‘reviewers-toggle-btn’).addEventListener(‘click’, () => {
+showReviewerNames = !showReviewerNames;
+localStorage.setItem(‘pref_reviewer_names’, showReviewerNames ? ‘1’ : ‘0’);
+applyReviewerNames();
 });
 
 // Init — wait for Firebase module to be ready, then sync
 function init() {
-  // Restore saved preferences
-  const savedDay = localStorage.getItem('pref_day');
-  if (savedDay) {
-    activeDay = savedDay;
-  }
-  const savedReviewer = localStorage.getItem('pref_reviewer');
-  if (savedReviewer !== null) {
-    activeReviewer = savedReviewer === 'all' ? null : parseInt(savedReviewer, 10);
-  }
-  const savedState = localStorage.getItem('pref_state');
-  if (savedState) {
-    activeState = savedState;
-    const stateBtn = document.querySelector(`#state-filters [data-state="${savedState}"]`);
-    if (stateBtn) {
-      document.querySelectorAll('#state-filters .state-btn').forEach(b => b.classList.remove('active'));
-      stateBtn.classList.add('active');
-    }
-  }
-  const savedDesc = localStorage.getItem('pref_desc');
-  if (savedDesc === '1') {
-    showDescriptions = true;
-  }
+// Restore saved preferences
+const savedDay = localStorage.getItem(‘pref_day’);
+if (savedDay) {
+activeDay = savedDay;
+}
+const savedReviewer = localStorage.getItem(‘pref_reviewer’);
+if (savedReviewer !== null) {
+activeReviewer = savedReviewer === ‘all’ ? null : parseInt(savedReviewer, 10);
+}
+const savedState = localStorage.getItem(‘pref_state’);
+if (savedState) {
+activeState = savedState;
+const stateBtn = document.querySelector(`#state-filters [data-state="${savedState}"]`);
+if (stateBtn) {
+document.querySelectorAll(’#state-filters .state-btn’).forEach(b => b.classList.remove(‘active’));
+stateBtn.classList.add(‘active’);
+}
+}
+const savedDesc = localStorage.getItem(‘pref_desc’);
+if (savedDesc === ‘1’) {
+showDescriptions = true;
+}
 
-  loadChecks();
-  buildTable();
+loadChecks();
+buildTable();
 
-  applyReviewerNames();
-  // Sync desc toggle button
-  const descBtn = document.getElementById('desc-toggle-btn');
-  if (descBtn && showDescriptions) {
-    descBtn.classList.add('active');
-    descBtn.textContent = '📋 Hide Descriptions';
-  }
-  // Sync day button highlight to restored preference
-  document.querySelectorAll('.day-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.day === activeDay);
-  });
+applyReviewerNames();
+// Sync desc toggle button
+const descBtn = document.getElementById(‘desc-toggle-btn’);
+if (descBtn && showDescriptions) {
+descBtn.classList.add(‘active’);
+descBtn.textContent = ‘📋 Hide Descriptions’;
+}
+// Sync day button highlight to restored preference
+document.querySelectorAll(’.day-btn’).forEach(b => {
+b.classList.toggle(‘active’, b.dataset.day === activeDay);
+});
 
-  filterRows();
-  updateStats();
-  if (window._fbReady) {
-    startFirebaseSync();
-  } else {
-    window.addEventListener('firebase-ready', startFirebaseSync);
-  }
+filterRows();
+updateStats();
+if (window._fbReady) {
+startFirebaseSync();
+} else {
+window.addEventListener(‘firebase-ready’, startFirebaseSync);
+}
 }
 init();
 
 // ── Sticky offset calculator ──────────────────────────────────────────────────
 function fixStickyOffsets() {
-  const h0 = (document.querySelector('.site-header') || {offsetHeight:0}).offsetHeight;
-  const h1 = (document.querySelector('.filters-bar') || {offsetHeight:0}).offsetHeight;
-  const h2 = (document.querySelector('.progress-row') || {offsetHeight:0}).offsetHeight;
-  const fb = document.querySelector('.filters-bar');
-  const pr = document.querySelector('.progress-row');
-  const th = document.querySelector('thead');
-  if (fb) fb.style.top  = h0 + 'px';
-  if (pr) pr.style.top  = (h0 + h1) + 'px';
-  if (th) th.style.top  = h0 + 'px';
+const h0 = (document.querySelector(’.site-header’) || {offsetHeight:0}).offsetHeight;
+const h1 = (document.querySelector(’.filters-bar’) || {offsetHeight:0}).offsetHeight;
+const h2 = (document.querySelector(’.progress-row’) || {offsetHeight:0}).offsetHeight;
+const fb = document.querySelector(’.filters-bar’);
+const pr = document.querySelector(’.progress-row’);
+const th = document.querySelector(‘thead’);
+if (fb) fb.style.top  = h0 + ‘px’;
+if (pr) pr.style.top  = (h0 + h1) + ‘px’;
+if (th) th.style.top  = h0 + ‘px’;
 }
 fixStickyOffsets();
-window.addEventListener('resize', fixStickyOffsets);
+window.addEventListener(‘resize’, fixStickyOffsets);
 
 // ── Day indicator + scroll save ───────────────────────────────────────────────
 function updateDayIndicator() {
-  const indicator = document.getElementById('current-day-indicator');
-  if (!indicator) return;
-  const dayRows = document.querySelectorAll('tr.day-row:not(.hidden)');
-  const threshold = 120; // px from top - below site header + column header
-  let currentDay = null;
-  dayRows.forEach(row => {
-    const rect = row.getBoundingClientRect();
-    if (rect.top <= threshold) currentDay = row.dataset.day;
-  });
-  const colors = {Thursday:'#3b82f6',Friday:'#ec4899',Saturday:'#f97316',Sunday:'#a78bfa',Monday:'#34d399'};
-  if (currentDay) {
-    indicator.textContent = currentDay;
-    indicator.style.display = 'block';
-    indicator.style.color = colors[currentDay] || '#ffffff';
-    indicator.style.background = (colors[currentDay] || '#ffffff') + '22';
-    indicator.style.borderLeft = '3px solid ' + (colors[currentDay] || '#ffffff');
-  } else {
-    indicator.style.display = 'none';
-  }
+const indicator = document.getElementById(‘current-day-indicator’);
+if (!indicator) return;
+const dayRows = document.querySelectorAll(‘tr.day-row:not(.hidden)’);
+const threshold = 120; // px from top - below site header + column header
+let currentDay = null;
+dayRows.forEach(row => {
+const rect = row.getBoundingClientRect();
+if (rect.top <= threshold) currentDay = row.dataset.day;
+});
+const colors = {Thursday:’#3b82f6’,Friday:’#ec4899’,Saturday:’#f97316’,Sunday:’#a78bfa’,Monday:’#34d399’};
+if (currentDay) {
+indicator.textContent = currentDay;
+indicator.style.display = ‘block’;
+indicator.style.color = colors[currentDay] || ‘#ffffff’;
+indicator.style.background = (colors[currentDay] || ‘#ffffff’) + ‘22’;
+indicator.style.borderLeft = ’3px solid ’ + (colors[currentDay] || ‘#ffffff’);
+} else {
+indicator.style.display = ‘none’;
+}
 }
 
-window.addEventListener('scroll', () => {
-  localStorage.setItem('pref_scroll', window.scrollY);
-  updateDayIndicator();
+window.addEventListener(‘scroll’, () => {
+localStorage.setItem(‘pref_scroll’, window.scrollY);
+updateDayIndicator();
 });
 updateDayIndicator();
 
 // ── TXT Export ────────────────────────────────────────────────────────────────
-const STATE_LABELS = { 0: '[ ]', 1: '[-]', 2: '[✓]', 3: '[✗]' };
+const STATE_LABELS = { 0: ‘[ ]’, 1: ‘[-]’, 2: ‘[✓]’, 3: ‘[✗]’ };
 
 function generateTxt() {
-  const visibleFilmRows = Array.from(document.querySelectorAll('tr.film-row:not(.hidden)'));
-  if (!visibleFilmRows.length) return '(no films match current filter)';
+const visibleFilmRows = Array.from(document.querySelectorAll(‘tr.film-row:not(.hidden)’));
+if (!visibleFilmRows.length) return ‘(no films match current filter)’;
 
-  let currentDay = null;
-  let lines = [];
+let currentDay = null;
+let lines = [];
 
-  visibleFilmRows.forEach(row => {
-    const fi = parseInt(row.dataset.fi);
-    const film = FILMS[fi];
+visibleFilmRows.forEach(row => {
+const fi = parseInt(row.dataset.fi);
+const film = FILMS[fi];
 
-    if (film.day !== currentDay) {
-      currentDay = film.day;
-      if (lines.length > 0) lines.push('');
-      lines.push('── ' + currentDay + ' ──────────────────────────────');
-      lines.push('');
-    }
+```
+if (film.day !== currentDay) {
+  currentDay = film.day;
+  if (lines.length > 0) lines.push('');
+  lines.push('── ' + currentDay + ' ──────────────────────────────');
+  lines.push('');
+}
 
-    lines.push(film.title);
-    lines.push('  ' + film.author + '  |  ' + film.runtime);
-    lines.push('');
-  });
+lines.push(film.title);
+lines.push('  ' + film.author + '  |  ' + film.runtime);
+lines.push('');
+```
 
-  return lines.join('\n').trim();
+});
+
+return lines.join(’\n’).trim();
 }
 
 function openTxtModal() {
-  const modal = document.getElementById('txt-modal');
-  modal.style.display = 'flex';
-  document.getElementById('txt-output').value = generateTxt();
+const modal = document.getElementById(‘txt-modal’);
+modal.style.display = ‘flex’;
+document.getElementById(‘txt-output’).value = generateTxt();
 }
 
 function closeTxtModal() {
-  document.getElementById('txt-modal').style.display = 'none';
+document.getElementById(‘txt-modal’).style.display = ‘none’;
 }
 
 function copyTxt() {
-  const ta = document.getElementById('txt-output');
-  ta.select();
-  navigator.clipboard.writeText(ta.value).catch(() => document.execCommand('copy'));
-  const btn = event.target;
-  btn.textContent = 'Copied!';
-  setTimeout(() => btn.textContent = 'Copy All', 1500);
+const ta = document.getElementById(‘txt-output’);
+ta.select();
+navigator.clipboard.writeText(ta.value).catch(() => document.execCommand(‘copy’));
+const btn = event.target;
+btn.textContent = ‘Copied!’;
+setTimeout(() => btn.textContent = ‘Copy All’, 1500);
 }
 
-document.getElementById('txt-btn').addEventListener('click', openTxtModal);
+document.getElementById(‘txt-btn’).addEventListener(‘click’, openTxtModal);
 
 // Close modal on backdrop click
-document.getElementById('txt-modal').addEventListener('click', e => {
-  if (e.target === document.getElementById('txt-modal')) closeTxtModal();
+document.getElementById(‘txt-modal’).addEventListener(‘click’, e => {
+if (e.target === document.getElementById(‘txt-modal’)) closeTxtModal();
 });
 </script>
+
 </body>
 </html>
